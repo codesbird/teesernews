@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile | {{ user.0.username|title}}</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+    <link href="https://avatars.githubusercontent.com/u/89650675?v=4" rel="icon">
+    <link href="https://bootstrapmade.com/demo/templates/PhotoFolio/assets/img/apple-touch-icon.png"
+        rel="apple-touch-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Cardo:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+
+
+    <link href="{% static '/resources/style/main.css' %}" rel="stylesheet">
+    <link href="{% static '/resources/style/glightbox.min.css' %}" rel="stylesheet">
+    <link href="{% static '/resources/style/compiled-4.20.0.min.css' %}" rel="stylesheet">
+
+    {% comment %} <link href="https://bootstrapmade.com/demo/templates/PhotoFolio/assets/css/main.css" rel="stylesheet"> {% endcomment %}
+    {% comment %} <link href="https://bootstrapmade.com/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet"> {% endcomment %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+
+    {% comment %} <link rel="stylesheet" href="https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/docs-app/css/compiled-4.20.0.min.css"> {% endcomment %}
+
+    <link rel="stylesheet" href="{% static 'style/profile.css' %}">
+    <style>
+        .folow-hide {
+            display: none;
+        }
+
+        .active-now {
+            background-color: rgb(0 209 146) !important;
+            color: white !important;
+        }
+    </style>
+
+</head>
+
+<body>
+    <header id="header" class="header fixed-top p-0 bg-dark" style="z-index: 1000;">
+        <div class="container-fluid d-flex align-items-center justify-content-between">
+            <a href="/" class="logo d-flex align-items-center me-auto me-lg-0">
+                <i class="bi bi-camera"></i>
+                <h1>GreenMedia</h1>
+            </a>
+            <nav id="navbar" class="navbar p-0" style="box-shadow:0 0 0 !important">
+                <ul>
+                    <li><a href="/" class="dropdown active"><span><i class="bi bi-house"></i> Home</span></a>
+                    </li>
+                    {% block latest %}
+                    {% endblock latest %}
+
+                    <li class="dropdown"><a href="/videos/"><span><i class="bi bi-play-circle"></i> Videos</span> <i
+                                class="bi bi-chevron-down dropdown-indicator"></i></a>
+                        <ul>
+
+                            <li><a href="/videos/search/nature/">Nature</a>
+                            </li>
+                            <li><a href="/videos/search/is-paid/">Is Paid</a>
+                            </li>
+                            <li><a href="/videos/search/horizontal/">Horizontal</a>
+                            </li>
+                            <li><a href="/videos/search/vertical/">Vertical</a>
+                            </li>
+                            <li><a href="/videos/search/sports/">Sports</a>
+                            </li>
+                            <li><a href="/videos/search/travel/">Travel</a>
+                            </li>
+                            <li class="dropdown"><a href="/videos/search/wether/"><span>Wether</span> <i
+                                        class="bi bi-chevron-down dropdown-indicator"></i></a>
+                                <ul>
+                                    <li><a href="/videos/search/early-morning/">Early Morning</a></li>
+                                    <li><a href="/videos/search/morning/">Morning</a></li>
+                                    <li><a href="/videos/search/afternoon/">Afternoon</a></li>
+                                    <li><a href="/videos/search/evening/">Evening</a></li>
+                                    <li><a href="/videos/search/night/">Night</a></li>
+                                    <li><a href="/videos/search/late-night/">Late Night</a></li>
+
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown"><a href="/musics/"><span><i class="bi bi-music-note"></i> Music</span> <i
+                                class="bi bi-chevron-down dropdown-indicator"></i></a>
+                        <ul>
+
+                            <li><a href="/musics/search/nature/">Nature</a></li>
+                            <li><a href="/musics/search/people/">People</a></li>
+                            <li><a href="/musics/search/architecture/">Architecture</a></li>
+                            <li><a href="/musics/search/animal/">Animals</a></li>
+                            <li><a href="/musics/search/sports/">Sports</a></li>
+                            <li><a href="/musics/search/travel/">Travel</a></li>
+                            <li class="dropdown"><a href="/musics/search/wether/"><span>Wether</span> <i
+                                        class="bi bi-chevron-down dropdown-indicator"></i></a>
+                                <ul>
+                                    <li><a href="/musics/search/early-morning/">Early Morning</a></li>
+                                    <li><a href="/musics/search/morning/">Morning</a></li>
+                                    <li><a href="/musics/search/afternoon/">Afternoon</a></li>
+                                    <li><a href="/musics/search/evening/">Evening</a></li>
+                                    <li><a href="/musics/search/night/">Night</a></li>
+                                    <li><a href="/musics/search/late-night/">Late Night</a></li>
+
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown"><a href="/images/"><span><i class="bi bi-card-image"></i> Gallery</span> <i
+                                class="bi bi-chevron-down dropdown-indicator"></i></a>
+                        <ul>
+
+                            <li><a href="/images/search/nature/">Nature</a></li>
+                            <li><a href="/images/search/is-paid/">Is Paid</a></li>
+                            <li><a href="/images/search/desktop/">Desktop</a></li>
+                            <li><a href="/images/search/phone/">Phone</a></li>
+                            <li><a href="/images/search/sports/">Sports</a></li>
+                            <li><a href="/images/search/travel/">Travel</a></li>
+                            <li class="dropdown"><a href="/images/search/wether/"><span>Wether</span> <i
+                                        class="bi bi-chevron-down dropdown-indicator"></i></a>
+                                <ul>
+                                    <li><a href="/images/search/early-morning/">Early Morning</a></li>
+                                    <li><a href="/images/search/morning/">Morning</a></li>
+                                    <li><a href="/images/search/afternoon/">Afternoon</a></li>
+                                    <li><a href="/images/search/evening/">Evening</a></li>
+                                    <li><a href="/images/search/Night/">Night</a></li>
+                                    <li><a href="/images/search/late-night/">Late Night</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a href="/services/"><span><i class="bi bi-briefcase-fill"></i> Services</span></a>
+                    </li>
+                    <li><a href="/contact/"><span><i class="bi bi-phone-flip"></i> Contact</span></a></li>
+                    <li><a href="/about/"><span><i class="bi bi-file-earmark-person"></i> About</span></a></li>
+                    <li>
+                        {% if request.user.is_authenticated %}
+                        {% if request.user.profile %}
+                        <a class="mx-2" href="/dashboard/" title="{{request.user.username}}"><img
+                                src="{{request.user.profile.url}}" style="width: 50px;height: 50px;border-radius: 50%;"
+                                alt=""></a>
+                        {% else %}
+                        <a class="mx-2" href="/dashboard/" title="{{request.user.username}}"><i style="font-size: 25px;"
+                                class="bi bi-person-circle"></i></a>
+                        {% endif %}
+                        {% else %}
+                        <a class="mx-2" href="/login"><i style="font-size: 25px;" class="bi bi-person-circle"></i></a>
+
+                        {% endif %}
+                    </li>
+                </ul>
+            </nav>
+
+            <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+            <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+        </div>
+    </header>
+
+
+    <div class="main-content" style="position: relative;">
+
+        <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
+            style="background-image: url(https://raw.githubusercontent.com/creativetimofficial/argon-dashboard/gh-pages/assets-old/img/theme/profile-cover.jpg); background-size: cover; background-position: center top;">
+            <!-- Mask -->
+            <span class="mask bg-gradient-default opacity-8"></span>
+            <!-- Header container -->
+            <div class="container-fluid d-flex align-items-center">
+                <div class="row">
+                    <div class="col-lg-7 col-md-10">
+                        {% if usernotfound %}
+                        <h1 class="display-2 text-white">Hello this is, {{ user.0.get_full_name|title}}</h1>
+                        <p class="text-white mt-0 mb-5">This is {{user.0.username}}'s profile page. You can see the
+                            progress you've made with your work and manage your projects or assigned tasks</p>
+
+                        {% else %}
+                        <h1 class="" style='color:orange; width:100%;display:flex;'>User is not found</h1>
+                        <p class="text-white mt-0 mb-5">This is your profile page. You can see the progress you've made
+                            with your work and manage your projects or assigned tasks</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                {% if request.user.is_anonymous %}
+                <button type="button" class="btn btn-primary" data-toggle="modal"
+                    data-target="#authssssenticationmodel">Log in</button>
+                {% endif %}
+                {% if user.0.private %}
+                <h3 class="text-warning" style="z-index: 1;"> Account is Private</h3>
+                {% endif %}
+            </div>
+        </div>
+        <!-- Page content -->
+        <div class="container-fluid mt--7" style="z-index: 1000;position: relative;">
+            <div class="row">
+                <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
+                    <div class="card card-profile shadow">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-3 order-lg-2">
+                                <div class="card-profile-image shadow-lg bg-dark    ">
+                                    <a class="shadow-lg bg-primary">
+                                        {% if user.0.profile %}
+                                        <img src="{{ user.0.profile.url}}" class="rounded-circle"
+                                            style="width: 150px;height: 150px;border-radius: 50%;box-shadow:0 0 8px black;">
+
+
+                                        {% else %}
+                                        <a href="/dashboard/" title="{{user.username}}">
+                                            {% if user.0.gender == 'Female' %}
+                                            <img style="float: left;width:150px;height: 150px;border-radius: 50%;box-shadow:  0 0 4px darkslategray;"
+                                                src="{% static 'img/femaleuser.png' %}" alt="Profile">
+                                            {% elif user.0.gender == 'Male' %}
+                                            <img style="float: left;width:150px;height: 150px;border-radius: 50%;box-shadow:  0 0 4px darkslategray;"
+                                                src="{% static 'img/maleuser.png' %}" alt="Profile">
+                                            {% else %}
+                                            <img style="float: left;width:150px;height: 150px;border-radius: 50%;box-shadow:  0 0 4px darkslategray;"
+                                                src="{% static 'img/commanuser.png' %}" alt="Profile">
+                                            {% endif %}
+                                        </a>
+
+                                        {% endif %}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+                            <div class="d-flex justify-content-between">
+                                {% if followed %}
+                                <form
+                                    action="/profile/follow/?follow=false&user={{user.0.username}}&redirect={{user.0.username}}"
+                                    method="post">
+                                    {% csrf_token %}
+
+                                    <button type="submit"
+                                        class="btn text-white m-0 btn-sm mr-4 bg-primary btn">Unfollow</button>
+                                </form>
+
+                                {% else %}
+                                <form
+                                    action="/profile/follow/?follow=true&user={{user.0.username}}&redirect={{user.0.username}}"
+                                    method="post">
+                                    {% csrf_token %}
+
+                                    <button type="submit"
+                                        class="btn text-white m-0 btn-sm mr-4 bg-primary btn ">Follow</button>
+                                </form>
+                                {% endif %}
+
+                            </div>
+                        </div>
+                        <div class="card-body pt-0 pt-md-4">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="card-profile-stats d-flex justify-content-center mt-md-5">
+                                        <div>
+                                            <a onclick="ShowFollowers('follower')" style="cursor: pointer;">
+                                                <span class="heading">{{dashfollow|length}}</span>
+                                                <span class="nav-link">Followers</span>
+                                            </a>
+                                        </div>
+                                        <div>
+                                            <span class="heading">{{posts_count}}</span>
+                                            <span >Post</span>
+                                        </div>
+                                        <div>
+                                            <a onclick="ShowFollowers('following')" style="cursor: pointer;">
+                                                <span class="heading">{{dashfollowing|length}}</span>
+                                                <span class="nav-link">Following</span>
+                                            </a>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="text-center">
+                                <h3>{{ user.0.get_full_name|title}}</h3>
+                                <div class="h5 font-weight-300">
+                                    <i class="ni location_pin mr-2"></i>{{user.0.city | title}} {{user.0.state|title}}
+                                </div>
+
+                               
+
+
+                                <div class="h5 mt-4">
+                                    <i class="ni business_briefcase-24 mr-2"></i>Solution Manager - Creative Tim
+                                    Officer
+                                </div>
+                                <div>
+                                    <i class="ni education_hat mr-2"></i>University of Computer Science
+                                </div>
+
+
+                                <details class="mt-3 mw-100 bg-info text-white rounded shadow"  ><summary class="text-left px-3">About</summary>
+                                    <div style="max-height:250px;overflow-y: auto;" class="bg-white text-warning my-2 p-2">
+
+                                        {% if user.0.bio %}
+                                            <p class="text-left text-dark">{{user.0.bio}}</p>
+                                        {% else %}
+                                            <span>{{user.0.username}} is not added somthing about 
+                                                {% if user.0.gender == "Female" %}her {% else %}his {% endif %}
+                                                profile</span>
+                                        {% endif %}
+                                    </div>
+                                </details>
+
+                                <hr class="my-4">
+                            </div>
+                            {% comment %} These are the user Followers and also you can follow those {% endcomment %}
+                            <div id="follower" class="follow">
+                                <h2>Followers</h2>
+                                {% if dashfollow %}
+                                <div>
+
+                                {% for fol in dashfollow %}
+
+                                <div class="row p-1 rounded my-2"
+                                    style="display: flex;align-items: center;box-shadow: 0 0 5px rgba(0, 0, 0, 0.445);">
+                                    <div class="col mr-auto" style="max-width:55px;">
+                                        <a href="/profile/?user={{fol.0.username}}">
+
+                                            {% if fol.0.profile %}
+                                            <img src="{{ fol.0.profile.url}}" class="rounded-circle"
+                                                style="width: 40px;height: 40px;border-radius: 50%;box-shadow:0 0 8px black;"></a>
+
+
+                                        {% else %}
+                                        <a href="/dashboard/" title="{{user.username}}">
+                                            {% if user.0.gender == 'Female' %}
+                                            <img style="float: left;width:40px;height: 40px;border-radius: 50%;box-shadow:  0 0 4px darkslategray;"
+                                                src="{% static 'img/femaleuser.png' %}" alt="Profile">
+                                            {% elif user.0.gender == 'Male' %}
+                                            <img style="float: left;width:40px;height: 40px;border-radius: 50%;box-shadow:  0 0 4px darkslategray;"
+                                                src="{% static 'img/maleuser.png' %}" alt="Profile">
+                                            {% else %}
+                                            <img style="float: left;width:40px;height: 40px;border-radius: 50%;box-shadow:  0 0 4px darkslategray;"
+                                                src="{% static 'img/commanuser.png' %}" alt="Profile">
+                                            {% endif %}
+                                        </a>
+
+                                        {% endif %}
+
+
+
+                                    </div>
+                                    <div class="col mr-auto" style=';'><span>{{fol.0.username|title}}</span> </div>
+                                    <div class="col ml-auto d-flex justify-content-end">
+                                        {% if fol.1 %}
+                                        <form
+                                            action="/profile/follow/?follow=false&user={{fol.0.username}}&redirect={{user.0.username}}"
+                                            method="post">
+                                            {% csrf_token %}
+                                            <button type="submit" class="bg-primary text-white rounded"
+                                                style="border: none;width: 100px;height: 30px;">Unfollow</button></span>
+                                        </form>
+                                        {% else %}
+                                        <form
+                                            action="/profile/follow/?follow=true&user={{fol.0.username}}&redirect={{user.0.username}}"
+                                            method="post">
+                                            {% csrf_token %}
+                                            <button type="submit" class="bg-primary text-white rounded"
+                                                style="border: none;width: 100px;height: 30px;">Follow</button></span>
+                                        </form>
+                                        {% endif %}
+
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+
+                                {% else %}
+                                <h2 class="text-primary">0</h2>
+                                {% endif %}
+                            </div>
+
+                            {% comment %} These are the user Followings and also you can follow those {% endcomment %}
+                            <div id="following" class="folow-hide">
+                                <h2>Followings</h2>
+                                {% if dashfollowing %}
+                                <div class="overflow-auto">
+
+                                {% for fol in dashfollowing %}
+
+                                <div class="row p-1 rounded my-2"
+                                    style="display: flex;align-items: center;box-shadow: 0 0 5px rgba(0, 0, 0, 0.445);">
+                                    <div class="col mr-auto" style="max-width:55px;">
+
+
+
+                                        {% if fol.0.profile %}
+                                        <a href="/profile/?user={{fol.0.username}}">
+                                            <img src="{{ fol.0.profile.url}}" class="rounded-circle"
+                                                style="width: 40px;height: 40px;border-radius: 50%;box-shadow:0 0 8px black;">
+                                        </a>
+
+
+                                        {% else %}
+                                        <a href="/dashboard/" title="{{user.username}}">
+                                            {% if user.0.gender == 'Female' %}
+                                            <img style="float: left;width:40px;height: 40px;border-radius: 50%;box-shadow:  0 0 4px darkslategray;"
+                                                src="{% static 'img/femaleuser.png' %}" alt="Profile">
+                                            {% elif user.0.gender == 'Male' %}
+                                            <img style="float: left;width:40px;height: 40px;border-radius: 50%;box-shadow:  0 0 4px darkslategray;"
+                                                src="{% static 'img/maleuser.png' %}" alt="Profile">
+                                            {% else %}
+                                            <img style="float: left;width:40px;height: 40px;border-radius: 50%;box-shadow:  0 0 4px darkslategray;"
+                                                src="{% static 'img/commanuser.png' %}" alt="Profile">
+                                            {% endif %}
+                                        </a>
+
+                                        {% endif %}
+                                    </div>
+
+
+
+
+                                    <div class="col"> <span>{{fol.0.username|title}}</span> </div>
+                                    <div class="col ml-auto d-flex justify-content-end"> {% if fol.1 %}<form
+                                            action="/profile/follow/?follow=false&user={{fol.0.username}}&redirect={{user.0.username}}"
+                                            method="post">
+                                            {% csrf_token %}
+                                            <button type="submit" class="bg-primary text-white rounded"
+                                                style="border: none;width: 100px;height: 30px;">Unfollow</button></span>
+                                        </form>
+                                        {% else %}
+                                        <form
+                                            action="/profile/follow/?follow=true&user={{fol.0.username}}&redirect={{user.0.username}}"
+                                            method="post">
+                                            {% csrf_token %}
+                                            <button type="submit" class="bg-primary text-white rounded"
+                                                style="border: none;width: 100px;height: 30px;">Follow</button></span>
+                                        </form>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                {% endfor %}
+                                </div>
+                                {% else %}
+                                <h2 class="text-primary">0</h2>
+                                {% endif %}
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!--  These are the post by query user -->
+                <div class="col-xl-8 order-xl-1">
+                    <h2 style="
+                    color: #ff00dc;
+                    font-weight:bolder;
+                    font-size: 24px;
+                    text-decoration-color: red;
+                    text-shadow: 0 0 5px #046dff;
+                ">Posts</h2>
+                    {% if user.0.private %}
+                    <h3 style="color:#f40fac !important;">{{user.0.username}} converted it into a private account, you
+                        can only see public accounts posts</h3>
+                    {% else %}
+                    <div class="card bg-secondary shadow">
+
+                        <div class="card-header bg-white border-0">
+                            <div class="row align-items-center">
+
+                                <a class="col shadow-lg mx-1 p-2 rounded text-center"
+                                    onclick="ShowPost('video-container',this)" id="videobtn"
+                                    style="cursor: pointer;"><span>{{posts.0|length}}</span> Video</a>
+                                <a class="col shadow-lg mx-1 p-2 rounded text-center active-now"
+                                    onclick="ShowPost('image-container',this)" id="imagebtn"
+                                    style="cursor: pointer;"><span>{{posts.1|length}}</span> Image</a>
+                                <a class="col shadow-lg mx-1 p-2 rounded text-center"
+                                    onclick="ShowPost('audio-container',this)" id="audiobtn"
+                                    style="cursor: pointer;"><span>{{posts.2|length}}</span> Audio</a>
+
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="container " id="image-container">
+                                <!-- <h6  style="font-size: 12px;">All Content Here-: </h6> -->
+                                <h2 class="text-muted mb-4 ">Image Gallery </h2>
+
+                                <section id="gallery" class="gallery">
+                                    <div class="container-fluid">
+
+                                        <div class="row gy-4 justify-content-center">
+                                            {% for image in posts.1 %}
+                                            <div class="col-xl-3 col-lg-4 col-md-6">
+                                                <div class="gallery-item h-100"> <img style="width:100%;height:100%;"
+                                                        src="{{image.file.url}}" class="img-fluid" alt="">
+                                                    <div
+                                                        class="gallery-links d-flex align-items-center justify-content-center">
+                                                        <a href="{{image.file.url}}" title="Gallery 1"
+                                                            class="glightbox preview-link"><i
+                                                                class="bi bi-arrows-angle-expand"></i></a>
+                                                        <a href="{{image.file.url}}" download="{{image.file.url}}"
+                                                            class="details-link"><i
+                                                                class="bi bi-arrow-down-circle"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+
+
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                            <div class="container d-none " id="video-container">
+                                <!-- <h6  style="font-size: 12px;">All Content Here-: </h6> -->
+                                <h2 class="text-muted mb-4 ">Video Gallery </h2>
+
+                                <section id="gallery" class="gallery">
+                                    <div class="container-fluid">
+
+                                        <div class="row gy-4 justify-content-center">
+                                            {% for video in posts.0 %}
+                                            <div class="col-xl-3 col-lg-4 col-md-6">
+
+                                                <div class="gallery-item h-100"
+                                                    style="box-shadow: 0 0 5px rgb(97, 96, 96)">
+                                                    <a href="{{video.1.file.url}}" title="{{video.1.title}}"
+                                                        class="glightbox preview-link">
+                                                        <span
+                                                            style="position: absolute;top: 2%;left: 5%;z-index: 1000;font-size: 40px;color: white;"><i
+                                                                class="bi bi-play-fill shadow-lg"></i></span></a>
+                                                    <img style="width:100%;height:100%;border-radius:4px;"
+                                                        class="img-fluid" alt="" src="{{video.0.file.url}}">
+                                                    <div
+                                                        class="gallery-links d-flex align-items-center justify-content-center">
+                                                        <a href="/videos/single-file/?model={{video.1.id}}"><i
+                                                                class="bi bi-arrows-angle-expand"></i></a>
+                                                        <a href="{{video.1.file.url}}" download="{{video.1.title}}"
+                                                            class="details-link"><i
+                                                                class="bi bi-arrow-down-circle"></i></a>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            {% endfor %}
+
+
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                            <div class="container d-none" id="audio-container">
+                                <!-- <h6  style="font-size: 12px;">All Content Here-: </h6> -->
+                                <h2 class="text-muted mb-4 ">Audio Gallery </h2>
+
+                                <section id="gallery" class="gallery">
+                                    <div class="container-fluid">
+
+                                        <div class="row gy-4 justify-content-center">
+                                            {% for audio in posts.2 %}
+                                            <div class="col-xl-3 col-lg-4 col-md-6">
+                                                <div class=" h-100">
+                                                    <audio controls>
+                                                        <source src="{{audio.file.url}}" type="audio/ogg">
+                                                        <source src="{{audio.file.url}}" type="audio/mpeg">
+                                                    </audio>
+
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+
+
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="authssssenticationmodel" tabindex="-1" aria-labelledby="myModalLabel"
+        style="display: none;position: absolute !important;" data-gtm-vis-first-on-screen-2340190_1302="138415"
+        data-gtm-vis-total-visible-time-2340190_1302="100" data-gtm-vis-has-fired-2340190_1302="1" aria-hidden="true">
+        <div class="modal-dialog cascading-modal" role="document">
+            <!--Content-->
+            <div class="modal-content">
+
+                <!--Modal cascading tabs-->
+                <div class="modal-c-tabs">
+
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs md-tabs tabs-2 light-blue darken-3" role="tablist">
+                        <li class="nav-item waves-effect waves-light ml-3">
+                            <a class="nav-link active" data-toggle="tab" href="#panel7" role="tab"><i
+                                    class="fas fa-user mr-1"></i>
+                                Login</a>
+                        </li>
+                        <li class="nav-item waves-effect waves-light">
+                            <a class="nav-link" data-toggle="tab" href="#panel8" role="tab"><i
+                                    class="fas fa-user-plus mr-1"></i>
+                                Register</a>
+                        </li>
+                    </ul>
+
+                    <!-- Tab panels -->
+                    <div class="tab-content">
+                        <!--Panel 7-->
+                        <div class="tab-pane fade in show active" id="panel7" role="tabpanel">
+
+                            <!--Body-->
+                            <form action="/login/" method="post">
+                                {% csrf_token %}
+                                <div class="modal-body mb-1">
+                                    <div class="md-form form-sm mb-5">
+                                        <i class="fas fa-envelope prefix"></i>
+                                        <!-- <label data-error="wrong" data-success="right" for="modalLRInput1">Your Username</label> -->
+                                        <input type="text" name="username" id="modalLRInput1"
+                                            class="px-2 form-control form-control-sm validate"
+                                            placeholder="Your Username" required>
+                                    </div>
+
+                                    <div class="md-form form-sm mb-4">
+                                        <i class="fas fa-lock prefix"></i>
+                                        <!-- <label data-error="wrong" data-success="right" for="modalLRInput2">Your Password</label> -->
+                                        <input type="password" id="modalLRInput2" name="password"
+                                            class="px-2 form-control form-control-sm validate"
+                                            placeholder="Your Password" required>
+                                    </div>
+                                    <div class="text-center mt-2">
+                                        <button type="submit" class="btn btn-info waves-effect waves-light">Log in <i
+                                                class="fas fa-sign-in ml-1"></i></button>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <!--Footer-->
+                            <div class="modal-footer">
+                                <div class="options text-center text-md-right mt-1">
+                                    <p>Not a member? <a href="/register/" class="blue-text">Sign Up</a></p>
+                                    <p>Forgot <a href="#" class="blue-text">Password?</a></p>
+                                </div>
+                                <button type="button" class="btn btn-outline-info waves-effect ml-auto"
+                                    data-dismiss="modal">Close</button>
+                            </div>
+
+                        </div>
+                        <!--/.Panel 7-->
+
+                        <!--Panel 8-->
+                        <div class="tab-pane fade" id="panel8" role="tabpanel">
+
+                            <!--Body-->
+                            <form method="post" action="/register/" class="bg-dark modal-body">
+                                <div style="height: 360px !important;overflow: auto;">
+                                    {% csrf_token %}
+
+                                    <div class="md-form form-sm mb-5">
+
+                                        <input type="text" id="modalLRInput3" required name="first_name"
+                                            placeholder="First Name" class="px-2 form-control form-control-sm validate">
+
+                                    </div>
+
+                                    <div class="md-form form-sm mb-5">
+
+                                        <input type="text" required id="modalLRInput4" placeholder="Last Name"
+                                            name="last_name" class="px-2 form-control form-control-sm validate">
+
+                                    </div>
+
+                                    <div class="md-form form-sm mb-4">
+
+                                        <input type="text" id="modalLRInput5" required placeholder="Username"
+                                            name="username" class="px-2 form-control form-control-sm validate">
+                                    </div>
+
+                                    <div class="md-form form-sm mb-4">
+
+                                        <input type="email" required id="modalLRInput5" placeholder="Your Email"
+                                            name="email" class="px-2 form-control form-control-sm validate">
+                                    </div>
+                                    <div class="md-form form-sm mb-4">
+
+                                        <input required type="password" id="modalLRInput5" placeholder="Password"
+                                            name="password1" class="px-2 form-control form-control-sm validate">
+                                    </div>
+
+                                    <div class="md-form form-sm mb-4">
+
+                                        <input type="password" id="modalLRInput5" required
+                                            placeholder="Confirm Password" name="password2"
+                                            class="px-2 form-control form-control-sm validate">
+                                    </div>
+
+
+                                </div>
+                                <div class="text-center form-sm mt-2">
+                                    <button class="btn btn-info waves-effect waves-light">Sign up<i
+                                            class="fas fa-sign-in ml-1"></i></button>
+                                </div>
+                            </form>
+
+
+                            <!--Footer-->
+                            <div class="modal-footer">
+                                <div class="options text-right">
+                                    <p class="pt-1">Already have an account? <a href="/login/" class="blue-text">Log
+                                            In</a>
+                                    </p>
+                                </div>
+                                <button type="button" class="btn btn-outline-info waves-effect ml-auto"
+                                    data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                        <!--/.Panel 8-->
+                    </div>
+
+                </div>
+            </div>
+            <!--/.Content-->
+        </div>
+    </div>
+
+    <footer id="footer" class="footer bg-dark" style="z-index: 1000;">
+        <div class="header-social-links my-3 mx-5">
+            <a href="#" class="mx-2 twitter"><i class="bi bi-twitter"></i></a>
+            <a href="#" class="mx-2 facebook"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="mx-2 instagram"><i class="bi bi-instagram"></i></a>
+            <a href="#" class="mx-2 linkedin"><i class="bi bi-linkedin"></i></i></a>
+        </div>
+        <div class="container">
+            <div class="copyright"> &copy; Copyright <strong><span>GreenVideo</span></strong>. All Rights Reserved
+            </div>
+            <div class="credits"> Designed by <a href="https://www.github.com/tenali786/">Tenali Ramkrishna</a>
+            </div>
+        </div>
+    </footer> 
+    <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
+
+
+    <div id="preloader">
+        <div class="line"></div>
+    </div>
+
+    <!-- About user profile model  -->
+      <!-- This is the model for user followings -->
+    <div class="modal fade " id="aboutuser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content p-3" style="max-height: 94vh;overflow-y: scroll;">
+              <div class="modal-header p-0">
+                  <h5 class="modal-title" id="exampleModalLabel">
+                      About: {{user.0}}
+                  </h5>
+                  <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+              </div>
+              {% for fol in dashfollowings %}
+              <h6>{{user.0.bio}}</h6>
+              <div class="row p-1 rounded my-2"
+                  style="display: flex;align-items: center;box-shadow: 0 0 5px rgba(0, 0, 0, 0.445);">
+                  <div class="col" style="width:0%;">
+                      <a href="/profile/?user={{fol.username}}"> <img src="{{ fol.profile.url}}"
+                              class="rounded-circle"
+                              style="width: 40px;height: 40px;border-radius: 50%;box-shadow:0 0 8px black;"></a>
+                  </div>
+                  <div class="col text-dark"><span>{{fol.username|title}}</span> </div>
+                  <div class="col">
+
+                      <form action="/profile/follow/?follow=false&user={{fol.username}}&redirect='dashboard'"
+                          method="post">
+                          {% csrf_token %}
+                          <button type="submit" class="bg-primary text-white rounded"
+                              style="border: none;width: 100px;height: 30px;">Unfollow</button></span>
+                      </form>
+
+                  </div>
+              </div>
+              {% endfor %}
+          </div>
+      </div>
+  </div>
+
+    <script src="https://bootstrapmade.com/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://bootstrapmade.com/assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="https://bootstrapmade.com/assets/vendor/aos/aos.js"></script>
+    <script src="https://bootstrapmade.com/assets/vendor/php-email-form/validate.js"></script>
+
+    <script src="https://bootstrapmade.com/demo/templates/PhotoFolio/assets/js/main.js"></script>
+    <script async src='https://www.googletagmanager.com/gtag/js?id=G-P7JSYB1CSP'></script>
+
+
+
+
+
+    <script>
+        function ShowFollowers(obj_id) {
+            let follower = document.getElementById('follower');
+            let following = document.getElementById('following');
+
+            if (obj_id == 'following') {
+                follower.classList.add('folow-hide');
+                following.classList.remove('folow-hide');
+            }
+            else {
+                follower.classList.remove('folow-hide');
+                following.classList.add('folow-hide');
+            }
+        }
+
+
+        function ShowPost(obj_id, btn) {
+            let video = document.getElementById('video-container')
+            let image = document.getElementById('image-container')
+            let audio = document.getElementById('audio-container')
+
+            let videobtn = document.getElementById('videobtn')
+            let imagebtn = document.getElementById('imagebtn')
+            let audiobtn = document.getElementById('audiobtn')
+
+            if (obj_id == 'video-container') {
+                video.classList.remove('d-none')
+                image.classList.add('d-none')
+                audio.classList.add('d-none')
+                videobtn.classList.add('active-now')
+                imagebtn.classList.remove('active-now')
+                audiobtn.classList.remove('active-now')
+            }
+            else if (obj_id == 'image-container') {
+                image.classList.remove('d-none')
+
+                video.classList.add('d-none')
+                audio.classList.add('d-none')
+
+                imagebtn.classList.add('active-now')
+                videobtn.classList.remove('active-now')
+                audiobtn.classList.remove('active-now')
+            }
+            else if (obj_id == 'audio-container') {
+                audio.classList.remove('d-none')
+                image.classList.add('d-none')
+                video.classList.add('d-none')
+
+                audiobtn.classList.add('active-now')
+                imagebtn.classList.remove('active-now')
+                videobtn.classList.remove('active-now')
+            }
+
+        }
+    </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- ===============================================-->
+    <!--    Document Title-->
+    <!-- ===============================================-->
+    <title>Teezer News | Home</title>
+
+    <!-- ===============================================-->
+    <!--    Favicons-->
+    <!-- ===============================================-->
+    <link rel="apple-touch-icon" sizes="180x180"
+        href="https://prium.github.io/slick/v2.0.0/assets/img/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32"
+        href="https://prium.github.io/slick/v2.0.0/assets/img/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16"
+        href="https://prium.github.io/slick/v2.0.0/assets/img/favicons/favicon-16x16.png">
+    <link rel="shortcut icon" type="image/x-icon"
+        href="https://prium.github.io/slick/v2.0.0/assets/img/favicons/favicon.ico">
+    <link rel="manifest" href="https://prium.github.io/slick/v2.0.0/assets/img/favicons/manifest.json">
+    <meta name="msapplication-TileImage"
+        content="https://prium.github.io/slick/v2.0.0/assets/img/favicons/mstile-150x150.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- ===============================================-->
+    <!--    Stylesheets-->
+    <!-- ===============================================-->
+    {% load static %}
+    <link href="{% static 'css/main.css' %}" rel="stylesheet" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&amp;family=Source+Sans+Pro:wght@200;300;400;600;700;900&amp;display=swap"
+        rel="stylesheet">
+
+    <!-- this is from bootstrap  -->
+    <!-- main css -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <!-- icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+
+    <!-- this is from bootstrap -->
+    <style>
+        .search-news-box,
+        .search-news-btn {
+            border: 1px solid gray;
+            outline: none;
+
+            font-size: 18px;
+            border-radius: 4px;
+            background-color: rgba(0, 0, 0, 0.123);
+            color: rgb(204, 204, 204);
+            font-family: 'Times New Roman', Times, serif;
+        }
+        .search-news-btn:hover{
+            background-color: rgba(0, 0, 0, 0.363);
+            color: white;
+        }
+        .search-news-box {
+            min-width: 250px;
+            margin-right: 5px;
+            padding-left: 10px;
+            width: 100%;
+        }
+
+        .search-box-container {
+            z-index: 1;
+            display: block;
+            margin-bottom: 15px;
+            margin-top: -85px !important;
+        }
+
+        .news-cat::-webkit-scrollbar {
+            display: none;
+
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        @media only screen and (max-width: 760px) {
+            .search-box-container {
+                z-index: 1;
+                display: block;
+                margin-bottom: 15px;
+                margin-top: -20px !important;
+            }
+        }
+
+        @media only screen and (max-width:285px) {
+            .search-box-container div {
+                flex-wrap: wrap;
+            }
+
+            .search-box-container div input {
+                margin: 4px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    {% load humanize %}
+    {% load extras %}
+
+    <div class="preloader" id="preloader" data-preloader>
+        <div class="preloader-wrapper big active" data-preloader>
+            <div class="spinner-layer spinner-white-only">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                    <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <nav class="navbar navbar-slick navbar-expand-lg navbar-dark fixed-top py-2"
+        data-navbar-dark-on-scroll="data-navbar-dark-on-scroll">
+        <div class="container container-wide-xl"><a class="navbar-brand ls-2 p-0 me-4" href="/"><img
+                    src="https://prium.github.io/slick/v2.0.0/assets/img/slick-logo.svg" alt="SLiCK" width="50" /></a>
+
+            <button class="navbar-toggler hamburger hamburger--emphatic" type="button" data-bs-toggle="collapse"
+                data-bs-target="#primaryNavbarCollapse" aria-controls="primaryNavbarCollapse" aria-expanded="false"
+                aria-label="Toggle navigation"><span class="hamburger-box"><span
+                        class="hamburger-inner"></span></span></button>
+
+            <div class="collapse navbar-collapse" id="primaryNavbarCollapse">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" aria-current="page" href="showcase-pages.html">Pages</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="all-blocks.html">All Blocks</a></li>
+                    <li class="nav-item dropdown"><a class="nav-link dropdown-toggle dropdown-caret-none"
+                            id="navbarDropdownMenuLink" href="#!" data-bs-toggle="dropdown"
+                            data-sl-dropdown-on-hover="data-sl-dropdown-on-hover" aria-haspopup="true"
+                            aria-expanded="false"><span class="nav-link-text">Components<span
+                                    class="fa-solid fa-angle-down ms-1 fs--1 fw-bold"></span></span></a>
+                        <div class="dropdown-menu fade dropdown-components shadow-lg"
+                            aria-labelledby="navbarDropdownMenuLink">
+                            <div class="row justify-content-between">
+                                <div class="col-auto">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item mb-1"><a class="text-decoration-none link-700 fw-normal"
+                                                href="components/accordion.html">Accordion</a></li>
+                                        <li class="nav-item mb-1"><a class="text-decoration-none link-700 fw-normal"
+                                                href="components/alerts.html">Alerts</a></li>
+                                        <li class="nav-item mb-1"><a class="text-decoration-none link-700 fw-normal"
+                                                href="components/backgrounds.html">Backgrounds</a></li>
+                                        <li class="nav-item mb-1"><a class="text-decoration-none link-700 fw-normal"
+                                                href="components/badges.html">Badges</a></li>
+                                        <li class="nav-item mb-1"><a class="text-decoration-none link-700 fw-normal"
+                                                href="components/borders.html">Borders</a></li>
+                                        <li class="nav-item mb-1"><a class="text-decoration-none link-700 fw-normal"
+                                                href="components/buttons.html">Buttons</a></li>
+                                        <li class="nav-item mb-1"><a class="text-decoration-none link-700 fw-normal"
+                                                href="components/cards.html">Cards</a></li>
+                                        <li class="nav-item mb-1"><a class="text-decoration-none link-700 fw-normal"
+                                                href="components/carousel.html">Carousel</a></li>
+                                        <li class="nav-item mb-1"><a class="text-decoration-none link-700 fw-normal"
+                                                href="components/colors.html">Colors</a></li>
+                                        <li class="nav-item mb-1"><a class="text-decoration-none link-700 fw-normal"
+                                                href="components/dropdowns.html">Dropdowns</a></li>
+                                        <li class="nav-item mb-1"><a class="text-decoration-none link-700 fw-normal"
+                                                href="components/filter.html">Filter</a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-auto">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item mb-1"><a
+                                                class="text-decoration-none link-700 fw-normal py-1"
+                                                href="components/fontawesome.html">Fontawesome</a></li>
+                                        <li class="nav-item mb-1"><a
+                                                class="text-decoration-none link-700 fw-normal py-1"
+                                                href="components/forms.html">Forms</a></li>
+                                        <li class="nav-item mb-1"><a
+                                                class="text-decoration-none link-700 fw-normal py-1"
+                                                href="components/googlemap.html">Google Map</a></li>
+                                        <li class="nav-item mb-1"><a
+                                                class="text-decoration-none link-700 fw-normal py-1"
+                                                href="components/grid.html">Grid</a></li>
+                                        <li class="nav-item mb-1"><a
+                                                class="text-decoration-none link-700 fw-normal py-1"
+                                                href="components/iconsmind.html">Iconsmind</a></li>
+                                        <li class="nav-item mb-1"><a
+                                                class="text-decoration-none link-700 fw-normal py-1"
+                                                href="components/lightbox.html">Lightbox</a></li>
+                                        <li class="nav-item mb-1"><a
+                                                class="text-decoration-none link-700 fw-normal py-1"
+                                                href="components/masonary.html">Masonary</a></li>
+                                        <li class="nav-item mb-1"><a
+                                                class="text-decoration-none link-700 fw-normal py-1"
+                                                href="components/modal-video.html">Modal video</a></li>
+                                        <li class="nav-item mb-1"><a
+                                                class="text-decoration-none link-700 fw-normal py-1"
+                                                href="components/modal.html">Modal</a></li>
+                                        <li class="nav-item mb-1"><a
+                                                class="text-decoration-none link-700 fw-normal py-1"
+                                                href="components/navs-tabs.html">Navs &amp; tabs</a></li>
+                                        <li class="nav-item mb-1"><a
+                                                class="text-decoration-none link-700 fw-normal py-1"
+                                                href="components/navbar.html">Navbar</a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-auto">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item mb-1"><a
+                                                class="text-decoration-none link-700 fw-normal py-1"
+                                                href="components/parallax.html">Parallax</a></li>
+                                        <li class="nav-item mb-1"><a
+                                                class="text-decoration-none link-700 fw-normal py-1"
+                                                href="components/scrollspy.html">Scrollspy</a></li>
+                                        <li class="nav-item mb-1"><a
+                                                class="text-decoration-none link-700 fw-normal py-1"
+                                                href="components/sizing.html">Sizing</a></li>
+                                        <li class="nav-item mb-1"><a
+                                                class="text-decoration-none link-700 fw-normal py-1"
+                                                href="components/smtpjs.html">Smtpjs</a></li>
+                                        <li class="nav-item mb-1"><a
+                                                class="text-decoration-none link-700 fw-normal py-1"
+                                                href="components/spacing.html">Spacing</a></li>
+                                        <li class="nav-item mb-1"><a
+                                                class="text-decoration-none link-700 fw-normal py-1"
+                                                href="components/tables.html">Tables</a></li>
+                                        <li class="nav-item mb-1"><a
+                                                class="text-decoration-none link-700 fw-normal py-1"
+                                                href="components/tooltips.html">Tooltips</a></li>
+                                        <li class="nav-item mb-1"><a
+                                                class="text-decoration-none link-700 fw-normal py-1"
+                                                href="components/typed-text.html">Typed text</a></li>
+                                        <li class="nav-item mb-1"><a
+                                                class="text-decoration-none link-700 fw-normal py-1"
+                                                href="components/typography.html">Typography</a></li>
+                                        <li class="nav-item mb-1"><a
+                                                class="text-decoration-none link-700 fw-normal py-1"
+                                                href="components/zanimation.html">Zanimation</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown"><a class="nav-link dropdown-toggle dropdown-caret-none"
+                            id="navbarDropdownMenuLink2" href="#!" data-bs-toggle="dropdown-on-hover"
+                            data-sl-dropdown-on-hover="data-sl-dropdown-on-hover" aria-haspopup="true"
+                            aria-expanded="false"><span class="nav-link-text">Docs<span
+                                    class="fa-solid fa-angle-down ms-1 fs--1 fw-bold"></span></span></a>
+                        <ul class="dropdown-menu rounded fade border-0 bg-white shadow-lg"
+                            aria-labelledby="navbarDropdownMenuLink2">
+                            <li><a class="dropdown-item link-700" href="docs/getting-started.html">Getting Started</a>
+                            </li>
+                            <li><a class="dropdown-item link-700" href="docs/file-structure.html">File Structure</a>
+                            </li>
+                            <li><a class="dropdown-item link-700" href="docs/customization.html">Customization</a></li>
+                            <li><a class="dropdown-item link-700" href="docs/gulp.html">Gulp</a></li>
+                            <li><a class="dropdown-item link-700" href="docs/generator.html">Generator</a></li>
+                            <li class="nav-item"><a class="dropdown-item link-700" href="docs/plugins.html">Plugins</a>
+                            </li>
+                            <li class="nav-item"><a class="dropdown-item link-700" href="docs/changelog.html">Changelog
+                                </a></li>
+                        </ul>
+                    </li>
+
+
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto align-items-lg-center">
+                    <li class="nav-item"><a class="nav-link" href="sitemap.html">Sitemap</a></li>
+                    <li class="nav-item"><a class="nav-link" href="https://prium.github.io/slick/v2.0.0/generator.html"
+                            target="_blank">Generator</a></li>
+                    <li class="nav-item"><a class="btn btn-outline-light rounded-pill btn-sm border-2 ms-lg-2"
+                            href="https://themewagon.com/themes/slick/" target="_blank">Purchase </a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===============================================-->
+    <!--    Main Content-->
+    <!-- ===============================================-->
+    <main class="main" id="top">
+
+        <!-- ============================================-->
+        <!-- <section> begin ============================-->
+
+        <section class="pt-7 pt-md-9 pb-0 text-center m-0">
+
+            <div class="container search-box-container">
+                    <form   method="get" id="search_form"class="d-flex justify-content-center align-item-center h-max-content" >
+
+                        <input id="search_news_box" type="search" class="search-news-box" placeholder="Search news">
+                        
+                        <input onclick="SearchNow(this)" type="button" class="search-news-btn" value="Search Now">
+                    </form>
+
+                <div class="w-75  m-auto mt-5 text-light text-center">
+                    <h2>Start reading <strong>News</strong></h2>
+                    <!-- <p class="w-100 text-left text-light">ExpressNews: Your Go-To Destination for Up-to-the-Minute Real-Time News Updates and Breaking Stories</p> -->
+                    <p class="text-light">Your One-Stop Hub for Real-Time News Updates and Insights. Stay Connected to
+                        Breaking Stories, Timely Reports, and Expert Analysis, All Delivered Instantly. Stay Informed
+                        and Empowered with Teezer News Live.</p>
+
+                </div>
+            </div>
+
+
+
+
+
+            <div class="bg-holder overlay"
+                style="background-image:url(https://prium.github.io/slick/v2.0.0/assets/img/header_showcase.jpg);background-position: top;">
+
+            </div>
+            <!--/.bg-holder-->
+
+            <div class="container p-0">
+                <div class="row flex-center mx-auto showcase-banner">
+
+                </div>
+
+            </div><!-- end of .container-->
+        </section>
+        <!-- <section> close ============================-->
+        <!-- ============================================-->
+
+        {% comment %} Cuurent news channels and their news {% endcomment %}
+        <div class="container container-wide-xl showcase-content">
+
+            <div class="row w-100 justify-content-center align-items-center mx-auto mb-0 my-5">
+                {% comment %} contening news channels names {% endcomment %}
+                <a href="/channels" >View all</a>
+                <div style="display:flex;" class="align-items:center !important;">
+                    <a role="button" onclick="ScrollContent('cataguries','l')" class="pr-2 scroll-btn"><i
+                            class="fs-2 bi bi-chevron-compact-left"></i></button>
+                        <ul id="cataguries"
+                            class="h-100 news-cat px-1 showcase-nav w-100 d-flex align-item-center  overflow-auto"
+                            style="margin-top: 10px;" data-filter-nav>
+                            <li class="nav-item mb-3"><a class="isotope-nav" href="#!" data-filter="*">ALL</a></li>
+                            {% for channel in channels  %}
+                            <li class="nav-item mb-3" style="min-width:max-content;"><a class="isotope-nav text-uppercase" href="/channels?name={{channel}}"  data-filter=".Hindustan-times">{{channel}}</a></li>
+                            
+                            {% endfor %}
+                            
+                        </ul>
+                        <a role="button" onclick="ScrollContent('cataguries','r')" class="pl-2 scroll-btn"><i
+                                class="fs-2 bi bi-chevron-compact-right"></i></button>
+                </div>
+
+                {% comment %} contening top news {% endcomment %}
+
+                <div style="display:flex;" class="align-items:center !important;">
+                    <a role="button" onclick="ScrollContent('news-box','l')" class="pr-2 scroll-btn"><i
+                            class="fs-2 bi bi-chevron-compact-left"></i></button>
+                        <ul id="news-box"
+                            class="h-100 news-cat px-1 showcase-nav w-100 d-flex align-item-center  overflow-auto"
+                            style="margin-top: 0px;" data-filter-nav>
+
+                            {% for item in news %}
+                            {% if item.urlToImage %}
+                            <a class="navigation mx-1 nav-item col-6 col-lg-4 isotope-item" href="{{item.url}}"
+                                target="_blank">
+
+                                <div class="card bg-dark text-white" style="max-width: 600px;">
+                                    <img src="{{item.urlToImage}}" class="card-img" alt="Stony Beach" />
+                                    <div class="card-img-overlay" style="background-color: rgba(0, 0, 0, 0.3)">
+                                        <h5 class="card-title">{{item.source.name}}</h5>
+                                        <p class="card-text text-light">
+                                            {{item.title}}
+                                        </p>
+                                        <p class="card-text text-light">{{item.publishedAt|get_val|naturaltime}}</p>
+                                    </div>
+                                </div>
+                            </a>
+                            {% endif %}
+                            {% endfor %}
+
+
+
+
+                        </ul>
+                        <a role="button" onclick="ScrollContent('news-box','r')" class="pl-2 scroll-btn"><i
+                                class="fs-2 bi bi-chevron-compact-right"></i></button>
+                </div>
+            </div>
+
+
+
+        </div>
+
+
+
+        <div class="container container-wide-xl">
+            <div class="row gx-3 mx-0" data-sl-isotope='{"layoutMode":"packery","filter":".header"}'>
+                <a class="navigation col-6 col-lg-4 isotope-item" href="blocks/navigation-1.html" target="_blank">
+                    <img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/navigation-1.jpg"
+                        alt="navigation">
+                </a>
+                <a class="navigation col-6 col-lg-4 isotope-item" href="blocks/navigation-2.html" target="_blank"><img
+                        class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/navigation-2.jpg"
+                        alt="navigation"></a><a class="navigation col-6 col-lg-4 isotope-item"
+                    href="blocks/navigation-3.html" target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/navigation-3.jpg"
+                        alt="navigation"></a><a class="navigation col-6 col-lg-4 isotope-item"
+                    href="blocks/navigation-4.html" target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/navigation-4.jpg"
+                        alt="navigation"></a><a class="navigation col-6 col-lg-4 isotope-item"
+                    href="blocks/navigation-5.html" target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/navigation-5.jpg"
+                        alt="navigation"></a><a class="navigation col-6 col-lg-4 isotope-item"
+                    href="blocks/navigation-6.html" target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/navigation-6.jpg"
+                        alt="navigation"></a><a class="navigation col-6 col-lg-4 isotope-item"
+                    href="blocks/navigation-7.html" target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/navigation-7.jpg"
+                        alt="navigation"></a><a class="navigation col-6 col-lg-4 isotope-item"
+                    href="blocks/navigation-8.html" target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/navigation-8.jpg"
+                        alt="navigation"></a><a class="navigation col-6 col-lg-4 isotope-item"
+                    href="blocks/navigation-9.html" target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/navigation-9.jpg"
+                        alt="navigation"></a><a class="navigation col-6 col-lg-4 isotope-item"
+                    href="blocks/navigation-10.html" target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/navigation-10.jpg"
+                        alt="navigation"></a><a class="navigation col-6 col-lg-4 isotope-item"
+                    href="blocks/navigation-11.html" target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/navigation-11.jpg"
+                        alt="navigation"></a><a class="navigation col-6 col-lg-4 isotope-item"
+                    href="blocks/navigation-12.html" target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/navigation-12.jpg"
+                        alt="navigation"></a><a class="navigation col-6 col-lg-4 isotope-item"
+                    href="blocks/navigation-13.html" target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/navigation-13.jpg"
+                        alt="navigation"></a><a class="navigation col-6 col-lg-4 isotope-item"
+                    href="blocks/navigation-14.html" target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/navigation-14.jpg"
+                        alt="navigation"></a><a class="navigation col-6 col-lg-4 isotope-item"
+                    href="blocks/navigation-15.html" target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/navigation-15.jpg"
+                        alt="navigation"></a><a class="navigation col-6 col-lg-4 isotope-item"
+                    href="blocks/navigation-16.html" target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/navigation-16.jpg"
+                        alt="navigation"></a><a class="navigation col-6 col-lg-4 isotope-item"
+                    href="blocks/navigation-17.html" target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/navigation-17.jpg"
+                        alt="navigation"></a><a class="navigation col-6 col-lg-4 isotope-item"
+                    href="blocks/navigation-18.html" target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/navigation-18.jpg"
+                        alt="navigation"></a><a class="navigation col-6 col-lg-4 isotope-item"
+                    href="blocks/navigation-19.html" target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/navigation-19.jpg"
+                        alt="navigation"></a><a class="navigation col-6 col-lg-4 isotope-item"
+                    href="blocks/navigation-20.html" target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/navigation-20.jpg"
+                        alt="navigation"></a><a class="navigation col-6 col-lg-4 isotope-item"
+                    href="blocks/navigation-21.html" target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/navigation-21.jpg"
+                        alt="navigation"></a><a class="navigation col-6 col-lg-4 isotope-item"
+                    href="blocks/navigation-22.html" target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/navigation-22.jpg"
+                        alt="navigation"></a><a class="navigation col-6 col-lg-4 isotope-item"
+                    href="blocks/navigation-23.html" target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/navigation-23.jpg"
+                        alt="navigation"></a><a class="navigation col-6 col-lg-4 isotope-item"
+                    href="blocks/navigation-24.html" target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/navigation-24.jpg"
+                        alt="navigation"></a><a class="navigation col-6 col-lg-4 isotope-item"
+                    href="blocks/navigation-25.html" target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/navigation-25.jpg"
+                        alt="navigation"></a><a class="navigation col-6 col-lg-4 isotope-item"
+                    href="blocks/navigation-26.html" target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/navigation-26.jpg"
+                        alt="navigation"></a><a class="navigation col-6 col-lg-4 isotope-item"
+                    href="blocks/navigation-27.html" target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/navigation-27.jpg"
+                        alt="navigation"></a><a class="navigation col-6 col-lg-4 isotope-item"
+                    href="blocks/navigation-28.html" target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/navigation-28.jpg"
+                        alt="navigation"></a><a class="header col-6 col-lg-4 isotope-item" href="blocks/header-1.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/header-1.jpg"
+                        alt="header"></a><a class="header col-6 col-lg-4 isotope-item" href="blocks/header-2.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/header-2.jpg"
+                        alt="header"></a><a class="header col-6 col-lg-4 isotope-item" href="blocks/header-3.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/header-3.jpg"
+                        alt="header"></a><a class="header col-6 col-lg-4 isotope-item" href="blocks/header-4.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/header-4.jpg"
+                        alt="header"></a><a class="header col-6 col-lg-4 isotope-item" href="blocks/header-5.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/header-5.jpg"
+                        alt="header"></a><a class="header col-6 col-lg-4 isotope-item" href="blocks/header-6.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/header-6.jpg"
+                        alt="header"></a><a class="header col-6 col-lg-4 isotope-item" href="blocks/header-7.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/header-7.jpg"
+                        alt="header"></a><a class="header col-6 col-lg-4 isotope-item" href="blocks/header-8.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/header-8.jpg"
+                        alt="header"></a><a class="header col-6 col-lg-4 isotope-item" href="blocks/header-9.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/header-9.jpg"
+                        alt="header"></a><a class="header col-6 col-lg-4 isotope-item" href="blocks/header-10.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/header-10.jpg"
+                        alt="header"></a><a class="header col-6 col-lg-4 isotope-item" href="blocks/header-11.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/header-11.jpg"
+                        alt="header"></a><a class="header col-6 col-lg-4 isotope-item" href="blocks/header-12.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/header-12.jpg"
+                        alt="header"></a><a class="header col-6 col-lg-4 isotope-item" href="blocks/header-13.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/header-13.jpg"
+                        alt="header"></a><a class="header col-6 col-lg-4 isotope-item" href="blocks/header-14.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/header-14.jpg"
+                        alt="header"></a><a class="header col-6 col-lg-4 isotope-item" href="blocks/header-15.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/header-15.jpg"
+                        alt="header"></a><a class="header col-6 col-lg-4 isotope-item" href="blocks/header-16.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/header-16.jpg"
+                        alt="header"></a><a class="header col-6 col-lg-4 isotope-item" href="blocks/header-17.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/header-17.jpg"
+                        alt="header"></a><a class="features col-6 col-lg-4 isotope-item" href="blocks/features-1.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/features-1.jpg"
+                        alt="features"></a><a class="features col-6 col-lg-4 isotope-item" href="blocks/features-2.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/features-2.jpg"
+                        alt="features"></a><a class="features col-6 col-lg-4 isotope-item" href="blocks/features-3.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/features-3.jpg"
+                        alt="features"></a><a class="features col-6 col-lg-4 isotope-item" href="blocks/features-4.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/features-4.jpg"
+                        alt="features"></a><a class="features col-6 col-lg-4 isotope-item" href="blocks/features-5.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/features-5.jpg"
+                        alt="features"></a><a class="features col-6 col-lg-4 isotope-item" href="blocks/features-6.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/features-6.jpg"
+                        alt="features"></a><a class="features col-6 col-lg-4 isotope-item" href="blocks/features-7.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/features-7.jpg"
+                        alt="features"></a><a class="features col-6 col-lg-4 isotope-item" href="blocks/features-8.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/features-8.jpg"
+                        alt="features"></a><a class="features col-6 col-lg-4 isotope-item" href="blocks/features-9.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/features-9.jpg"
+                        alt="features"></a><a class="features col-6 col-lg-4 isotope-item"
+                    href="blocks/features-10.html" target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/features-10.jpg"
+                        alt="features"></a><a class="features col-6 col-lg-4 isotope-item"
+                    href="blocks/features-11.html" target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/features-11.jpg"
+                        alt="features"></a><a class="features col-6 col-lg-4 isotope-item"
+                    href="blocks/features-12.html" target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/features-12.jpg"
+                        alt="features"></a><a class="features col-6 col-lg-4 isotope-item"
+                    href="blocks/features-13.html" target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/features-13.jpg"
+                        alt="features"></a><a class="features col-6 col-lg-4 isotope-item"
+                    href="blocks/features-14.html" target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/features-14.jpg"
+                        alt="features"></a><a class="features col-6 col-lg-4 isotope-item"
+                    href="blocks/features-15.html" target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/features-15.jpg"
+                        alt="features"></a><a class="features col-6 col-lg-4 isotope-item"
+                    href="blocks/features-16.html" target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/features-16.jpg"
+                        alt="features"></a><a class="features col-6 col-lg-4 isotope-item"
+                    href="blocks/features-17.html" target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/features-17.jpg"
+                        alt="features"></a><a class="features col-6 col-lg-4 isotope-item"
+                    href="blocks/features-18.html" target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/features-18.jpg"
+                        alt="features"></a><a class="features col-6 col-lg-4 isotope-item"
+                    href="blocks/features-19.html" target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/features-19.jpg"
+                        alt="features"></a><a class="features col-6 col-lg-4 isotope-item"
+                    href="blocks/features-20.html" target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/features-20.jpg"
+                        alt="features"></a><a class="features col-6 col-lg-4 isotope-item"
+                    href="blocks/features-21.html" target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/features-21.jpg"
+                        alt="features"></a><a class="features col-6 col-lg-4 isotope-item"
+                    href="blocks/features-22.html" target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/features-22.jpg"
+                        alt="features"></a><a class="content col-6 col-lg-4 isotope-item" href="blocks/content-1.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/content-1.jpg"
+                        alt="content"></a><a class="content col-6 col-lg-4 isotope-item" href="blocks/content-2.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/content-2.jpg"
+                        alt="content"></a><a class="content col-6 col-lg-4 isotope-item" href="blocks/content-3.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/content-3.jpg"
+                        alt="content"></a><a class="content col-6 col-lg-4 isotope-item" href="blocks/content-4.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/content-4.jpg"
+                        alt="content"></a><a class="content col-6 col-lg-4 isotope-item" href="blocks/content-5.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/content-5.jpg"
+                        alt="content"></a><a class="content col-6 col-lg-4 isotope-item" href="blocks/content-6.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/content-6.jpg"
+                        alt="content"></a><a class="content col-6 col-lg-4 isotope-item" href="blocks/content-7.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/content-7.jpg"
+                        alt="content"></a><a class="content col-6 col-lg-4 isotope-item" href="blocks/content-8.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/content-8.jpg"
+                        alt="content"></a><a class="content col-6 col-lg-4 isotope-item" href="blocks/content-9.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/content-9.jpg"
+                        alt="content"></a><a class="content col-6 col-lg-4 isotope-item" href="blocks/content-10.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/content-10.jpg"
+                        alt="content"></a><a class="content col-6 col-lg-4 isotope-item" href="blocks/content-11.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/content-11.jpg"
+                        alt="content"></a><a class="content col-6 col-lg-4 isotope-item" href="blocks/content-12.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/content-12.jpg"
+                        alt="content"></a><a class="content col-6 col-lg-4 isotope-item" href="blocks/content-13.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/content-13.jpg"
+                        alt="content"></a><a class="content col-6 col-lg-4 isotope-item" href="blocks/content-14.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/content-14.jpg"
+                        alt="content"></a><a class="content col-6 col-lg-4 isotope-item" href="blocks/content-15.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/content-15.jpg"
+                        alt="content"></a><a class="content col-6 col-lg-4 isotope-item" href="blocks/content-16.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/content-16.jpg"
+                        alt="content"></a><a class="content col-6 col-lg-4 isotope-item" href="blocks/content-17.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/content-17.jpg"
+                        alt="content"></a><a class="content col-6 col-lg-4 isotope-item" href="blocks/content-18.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/content-18.jpg"
+                        alt="content"></a><a class="content col-6 col-lg-4 isotope-item" href="blocks/content-19.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/content-19.jpg"
+                        alt="content"></a><a class="content col-6 col-lg-4 isotope-item" href="blocks/content-20.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/content-20.jpg"
+                        alt="content"></a><a class="content col-6 col-lg-4 isotope-item" href="blocks/content-21.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/content-21.jpg"
+                        alt="content"></a><a class="content col-6 col-lg-4 isotope-item" href="blocks/content-22.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/content-22.jpg"
+                        alt="content"></a><a class="content col-6 col-lg-4 isotope-item" href="blocks/content-23.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/content-23.jpg"
+                        alt="content"></a><a class="content col-6 col-lg-4 isotope-item" href="blocks/content-24.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/content-24.jpg"
+                        alt="content"></a><a class="content col-6 col-lg-4 isotope-item" href="blocks/content-25.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/content-25.jpg"
+                        alt="content"></a><a class="content col-6 col-lg-4 isotope-item" href="blocks/content-26.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/content-26.jpg"
+                        alt="content"></a><a class="content col-6 col-lg-4 isotope-item" href="blocks/content-27.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/content-27.jpg"
+                        alt="content"></a><a class="content col-6 col-lg-4 isotope-item" href="blocks/content-28.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/content-28.jpg"
+                        alt="content"></a><a class="team col-6 col-lg-4 isotope-item" href="blocks/team-1.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/team-1.jpg"
+                        alt="team"></a><a class="team col-6 col-lg-4 isotope-item" href="blocks/team-2.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/team-2.jpg"
+                        alt="team"></a><a class="team col-6 col-lg-4 isotope-item" href="blocks/team-3.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/team-3.jpg"
+                        alt="team"></a><a class="team col-6 col-lg-4 isotope-item" href="blocks/team-4.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/team-4.jpg"
+                        alt="team"></a><a class="team col-6 col-lg-4 isotope-item" href="blocks/team-5.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/team-5.jpg"
+                        alt="team"></a><a class="cta col-6 col-lg-4 isotope-item" href="blocks/cta-1.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/cta-1.jpg"
+                        alt="cta"></a><a class="cta col-6 col-lg-4 isotope-item" href="blocks/cta-2.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/cta-2.jpg"
+                        alt="cta"></a><a class="cta col-6 col-lg-4 isotope-item" href="blocks/cta-3.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/cta-3.jpg"
+                        alt="cta"></a><a class="cta col-6 col-lg-4 isotope-item" href="blocks/cta-4.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/cta-4.jpg"
+                        alt="cta"></a><a class="cta col-6 col-lg-4 isotope-item" href="blocks/cta-5.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/cta-5.jpg"
+                        alt="cta"></a><a class="cta col-6 col-lg-4 isotope-item" href="blocks/cta-6.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/cta-6.jpg"
+                        alt="cta"></a><a class="cta col-6 col-lg-4 isotope-item" href="blocks/cta-7.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/cta-7.jpg"
+                        alt="cta"></a><a class="cta col-6 col-lg-4 isotope-item" href="blocks/cta-8.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/cta-8.jpg"
+                        alt="cta"></a><a class="cta col-6 col-lg-4 isotope-item" href="blocks/cta-9.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/cta-9.jpg"
+                        alt="cta"></a><a class="cta col-6 col-lg-4 isotope-item" href="blocks/cta-10.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/cta-10.jpg"
+                        alt="cta"></a><a class="cta col-6 col-lg-4 isotope-item" href="blocks/cta-11.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/cta-11.jpg"
+                        alt="cta"></a><a class="cta col-6 col-lg-4 isotope-item" href="blocks/cta-12.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/cta-12.jpg"
+                        alt="cta"></a><a class="cta col-6 col-lg-4 isotope-item" href="blocks/cta-13.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/cta-13.jpg"
+                        alt="cta"></a><a class="cta col-6 col-lg-4 isotope-item" href="blocks/cta-14.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/cta-14.jpg"
+                        alt="cta"></a><a class="cta col-6 col-lg-4 isotope-item" href="blocks/cta-15.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/cta-15.jpg"
+                        alt="cta"></a><a class="cta col-6 col-lg-4 isotope-item" href="blocks/cta-16.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/cta-16.jpg"
+                        alt="cta"></a><a class="cta col-6 col-lg-4 isotope-item" href="blocks/cta-17.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/cta-17.jpg"
+                        alt="cta"></a><a class="cta col-6 col-lg-4 isotope-item" href="blocks/cta-18.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/cta-18.jpg"
+                        alt="cta"></a><a class="cta col-6 col-lg-4 isotope-item" href="blocks/cta-19.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/cta-19.jpg"
+                        alt="cta"></a><a class="cta col-6 col-lg-4 isotope-item" href="blocks/cta-20.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/cta-20.jpg"
+                        alt="cta"></a><a class="cta col-6 col-lg-4 isotope-item" href="blocks/cta-21.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/cta-21.jpg"
+                        alt="cta"></a><a class="gallery col-6 col-lg-4 isotope-item" href="blocks/gallery-1.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/gallery-1.jpg"
+                        alt="gallery"></a><a class="gallery col-6 col-lg-4 isotope-item" href="blocks/gallery-2.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/gallery-2.jpg"
+                        alt="gallery"></a><a class="gallery col-6 col-lg-4 isotope-item" href="blocks/gallery-3.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/gallery-3.jpg"
+                        alt="gallery"></a><a class="forms col-6 col-lg-4 isotope-item" href="blocks/forms-1.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/forms-1.jpg"
+                        alt="forms"></a><a class="forms col-6 col-lg-4 isotope-item" href="blocks/forms-2.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/forms-2.jpg"
+                        alt="forms"></a><a class="forms col-6 col-lg-4 isotope-item" href="blocks/forms-3.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/forms-3.jpg"
+                        alt="forms"></a><a class="forms col-6 col-lg-4 isotope-item" href="blocks/forms-4.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/forms-4.jpg"
+                        alt="forms"></a><a class="forms col-6 col-lg-4 isotope-item" href="blocks/forms-5.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/forms-5.jpg"
+                        alt="forms"></a><a class="forms col-6 col-lg-4 isotope-item" href="blocks/forms-6.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/forms-6.jpg"
+                        alt="forms"></a><a class="forms col-6 col-lg-4 isotope-item" href="blocks/forms-7.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/forms-7.jpg"
+                        alt="forms"></a><a class="forms col-6 col-lg-4 isotope-item" href="blocks/forms-8.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/forms-8.jpg"
+                        alt="forms"></a><a class="forms col-6 col-lg-4 isotope-item" href="blocks/forms-9.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/forms-9.jpg"
+                        alt="forms"></a><a class="forms col-6 col-lg-4 isotope-item" href="blocks/forms-10.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/forms-10.jpg"
+                        alt="forms"></a><a class="forms col-6 col-lg-4 isotope-item" href="blocks/forms-11.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/forms-11.jpg"
+                        alt="forms"></a><a class="forms col-6 col-lg-4 isotope-item" href="blocks/forms-12.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/forms-12.jpg"
+                        alt="forms"></a><a class="forms col-6 col-lg-4 isotope-item" href="blocks/forms-13.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/forms-13.jpg"
+                        alt="forms"></a><a class="forms col-6 col-lg-4 isotope-item" href="blocks/forms-14.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/forms-14.jpg"
+                        alt="forms"></a><a class="partners col-6 col-lg-4 isotope-item" href="blocks/partners-1.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/partners-1.jpg"
+                        alt="partners"></a><a class="partners col-6 col-lg-4 isotope-item" href="blocks/partners-2.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/partners-2.jpg"
+                        alt="partners"></a><a class="partners col-6 col-lg-4 isotope-item" href="blocks/partners-3.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/partners-3.jpg"
+                        alt="partners"></a><a class="partners col-6 col-lg-4 isotope-item" href="blocks/partners-4.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/partners-4.jpg"
+                        alt="partners"></a><a class="testimonials col-6 col-lg-4 isotope-item"
+                    href="blocks/testimonials-1.html" target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/testimonials-1.jpg"
+                        alt="testimonials"></a><a class="testimonials col-6 col-lg-4 isotope-item"
+                    href="blocks/testimonials-2.html" target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/testimonials-2.jpg"
+                        alt="testimonials"></a><a class="testimonials col-6 col-lg-4 isotope-item"
+                    href="blocks/testimonials-3.html" target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/testimonials-3.jpg"
+                        alt="testimonials"></a><a class="testimonials col-6 col-lg-4 isotope-item"
+                    href="blocks/testimonials-4.html" target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/testimonials-4.jpg"
+                        alt="testimonials"></a><a class="pricing col-6 col-lg-4 isotope-item"
+                    href="blocks/pricing-1.html" target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/pricing-1.jpg"
+                        alt="pricing"></a><a class="pricing col-6 col-lg-4 isotope-item" href="blocks/pricing-2.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/pricing-2.jpg"
+                        alt="pricing"></a><a class="pricing col-6 col-lg-4 isotope-item" href="blocks/pricing-3.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/pricing-3.jpg"
+                        alt="pricing"></a><a class="pricing col-6 col-lg-4 isotope-item" href="blocks/pricing-4.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/pricing-4.jpg"
+                        alt="pricing"></a><a class="pricing col-6 col-lg-4 isotope-item" href="blocks/pricing-5.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/pricing-5.jpg"
+                        alt="pricing"></a><a class="pricing col-6 col-lg-4 isotope-item" href="blocks/pricing-6.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/pricing-6.jpg"
+                        alt="pricing"></a><a class="pricing col-6 col-lg-4 isotope-item" href="blocks/pricing-7.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/pricing-7.jpg"
+                        alt="pricing"></a><a class="contact col-6 col-lg-4 isotope-item" href="blocks/contact-1.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/contact-1.jpg"
+                        alt="contact"></a><a class="contact col-6 col-lg-4 isotope-item" href="blocks/contact-2.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/contact-2.jpg"
+                        alt="contact"></a><a class="contact col-6 col-lg-4 isotope-item" href="blocks/contact-3.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/contact-3.jpg"
+                        alt="contact"></a><a class="contact col-6 col-lg-4 isotope-item" href="blocks/contact-4.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/contact-4.jpg"
+                        alt="contact"></a><a class="contact col-6 col-lg-4 isotope-item" href="blocks/contact-5.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/contact-5.jpg"
+                        alt="contact"></a><a class="contact col-6 col-lg-4 isotope-item" href="blocks/contact-6.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/contact-6.jpg"
+                        alt="contact"></a><a class="footer col-6 col-lg-4 isotope-item" href="blocks/footer-1.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/footer-1.jpg"
+                        alt="footer"></a><a class="footer col-6 col-lg-4 isotope-item" href="blocks/footer-2.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/footer-2.jpg"
+                        alt="footer"></a><a class="footer col-6 col-lg-4 isotope-item" href="blocks/footer-3.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/footer-3.jpg"
+                        alt="footer"></a><a class="footer col-6 col-lg-4 isotope-item" href="blocks/footer-4.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/footer-4.jpg"
+                        alt="footer"></a><a class="footer col-6 col-lg-4 isotope-item" href="blocks/footer-5.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/footer-5.jpg"
+                        alt="footer"></a><a class="footer col-6 col-lg-4 isotope-item" href="blocks/footer-6.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/footer-6.jpg"
+                        alt="footer"></a><a class="footer col-6 col-lg-4 isotope-item" href="blocks/footer-7.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/footer-7.jpg"
+                        alt="footer"></a><a class="footer col-6 col-lg-4 isotope-item" href="blocks/footer-8.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/footer-8.jpg"
+                        alt="footer"></a><a class="footer col-6 col-lg-4 isotope-item" href="blocks/footer-9.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/footer-9.jpg"
+                        alt="footer"></a><a class="footer col-6 col-lg-4 isotope-item" href="blocks/footer-10.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/footer-10.jpg"
+                        alt="footer"></a><a class="footer col-6 col-lg-4 isotope-item" href="blocks/footer-11.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/footer-11.jpg"
+                        alt="footer"></a><a class="footer col-6 col-lg-4 isotope-item" href="blocks/footer-12.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/footer-12.jpg"
+                        alt="footer"></a><a class="footer col-6 col-lg-4 isotope-item" href="blocks/footer-13.html"
+                    target="_blank"><img class="img-fluid mb-3 rounded shadow-lg"
+                        src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/footer-13.jpg"
+                        alt="footer"></a>
+            </div>
+        </div>
+        <div class="position-relative">
+            <div class="wave z-index--1" style="top: -100%;"><svg viewBox="0 0 1440 120" width="100%" height="100%"
+                    fill="black">
+                    <path
+                        d="M1440,21.2101911 L1440,120 L0,120 L0,21.2101911 C120,35.0700637 240,42 360,42 C480,42 600,35.0700637 720,21.2101911 C808.32779,12.416393 874.573633,6.87702029 918.737528,4.59207306 C972.491685,1.8109458 1026.24584,0.420382166 1080,0.420382166 C1200,0.420382166 1320,7.35031847 1440,21.2101911 Z">
+                    </path>
+                </svg></div>
+
+            <!-- ============================================-->
+            <!-- <section> begin ============================-->
+            <section class="mt-8 bg-black">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col">
+                            <div
+                                class="border border-2 rounded-3 py-6 px-4 px-md-5 px-md-6 px-lg-8 text-center border-900">
+                                <h1 class="mb-5 fs-3 fs-md-4 fs-lg-5 fs-xl-6 fw-light text-white">Create a beautiful,
+                                    responsive website like this one effortlessly.</h1><a
+                                    class="btn btn-primary btn-lg rounded-pill px-5 px-md-7"
+                                    href="https://themewagon.com/themes/slick/" target="_blank">Purchase Slick</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-6 ps-lg-4">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="d-flex pe-lg-6"><span class="icon-Dollar-Sign text-white fs-3"></span>
+                                    <div class="flex-1 ms-3">
+                                        <h5 class="mb-lg-3 text-uppercase text-200">No Risk</h5>
+                                        <p class="mb-4 mb-lg-0 text-500">We'll give your money back within a 10-day
+                                            period.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="d-flex pe-lg-6"><span class="icon-Calendar-4 text-white fs-3"></span>
+                                    <div class="flex-1 ms-3">
+                                        <h5 class="mb-lg-3 text-uppercase text-200">NO SUBSCRIPTIONS</h5>
+                                        <p class="mb-4 mb-lg-0 text-500">One-time fee. Why pay monthly when you can pay
+                                            once?</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="d-flex pe-lg-6"><span class="icon-Clouds text-white fs-3"></span>
+                                    <div class="flex-1 ms-3">
+                                        <h5 class="mb-lg-3 text-uppercas text-200">UNLIMITED SITES</h5>
+                                        <p class="mb-4 mb-lg-0 text-500">Lifetime license. Build unlimited sites at no
+                                            additional cost!</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-6">
+                        <div class="col-md-6">
+                            <div class="border rounded-3 p-4 shadow-lg border-900">
+                                <div class="row align-items-center">
+                                    <div class="col-sm"><img class="img-fluid rounded-3 shadow-sm"
+                                            src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/header-11.jpg"
+                                            alt="About" /></div>
+                                    <div class="col">
+                                        <h4 class="text-200">Drag &amp; Drop Builder</h4><a
+                                            class="btn btn-sm btn-outline-light"
+                                            href="https://prium.github.io/slick/v2.0.0/generator.html"
+                                            target="_blank">Try Generator</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mt-4 mt-md-0">
+                            <div class="border rounded-3 p-4 shadow-lg border-900">
+                                <div class="row align-items-center">
+                                    <div class="col-sm"><img class="img-fluid rounded-3 shadow-sm"
+                                            src="https://prium.github.io/slick/v2.0.0/assets/img/screenshots/blocks/header-12.jpg"
+                                            alt="About" /></div>
+                                    <div class="col">
+                                        <h4 class="text-200">172 Premade Blocks</h4><a
+                                            class="btn btn-sm btn-outline-light" href="all-blocks.html">Explore
+                                            Blocks</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- end of .container-->
+            </section><!-- <section> close ============================-->
+            <!-- ============================================-->
+
+        </div>
+    </main><!-- ===============================================-->
+    <!--    End of Main Content-->
+    <!-- ===============================================-->
+
+
+
+    <!--===============================================-->
+    <!--    Footer-->
+    <!--===============================================-->
+
+    <!-- ============================================-->
+    <!-- <section> begin ============================-->
+    <section class="py-6 bg-1100" id="footer-9">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-lg-4 mb-4 mb-lg-0 mb-5 mb-lg-0">
+                    <h4 class="text-white lh-3">Empowering Designers, Makers, Doers and Creatives </h4>
+                    <p class="text-500">Founded in 2010 and based in Estonia, Slick is ranked among the top 10 companies
+                        in the entire world. </p><a class="btn btn-facebook btn-sm mt-3 me-2" href="#"><svg
+                            class="svg-inline--fa fa-facebook-square me-3" data-fa-transform="grow-8" aria-hidden="true"
+                            focusable="false" data-prefix="fab" data-icon="facebook-square" role="img"
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""
+                            style="transform-origin: 0.4375em 0.5em;">
+                            <g transform="translate(224 256)">
+                                <g transform="translate(0, 0)  scale(1.5, 1.5)  rotate(0 0 0)">
+                                    <path fill="currentColor"
+                                        d="M400 32H48A48 48 0 0 0 0 80v352a48 48 0 0 0 48 48h137.3V327.7h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.27c-30.81 0-40.42 19.12-40.42 38.73V256h68.78l-11 71.69h-57.78V480H400a48 48 0 0 0 48-48V80a48 48 0 0 0 -48-48z"
+                                        transform="translate(-224 -256)"></path>
+                                </g>
+                            </g>
+                        </svg><!-- <span class="fab fa-facebook-square me-3" data-fa-transform="grow-8"></span> Font Awesome fontawesome.com -->Like
+                        Slick</a><a class="btn btn-outline-twitter btn-sm mt-3" href="#"><svg
+                            class="svg-inline--fa fa-twitter me-3" data-fa-transform="grow-8" aria-hidden="true"
+                            focusable="false" data-prefix="fab" data-icon="twitter" role="img"
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""
+                            style="transform-origin: 0.5em 0.5em;">
+                            <g transform="translate(256 256)">
+                                <g transform="translate(0, 0)  scale(1.5, 1.5)  rotate(0 0 0)">
+                                    <path fill="currentColor"
+                                        d="M459.4 151.7c.325 4.548 .325 9.097 .325 13.65 0 138.7-105.6 298.6-298.6 298.6-59.45 0-114.7-17.22-161.1-47.11 8.447 .974 16.57 1.299 25.34 1.299 49.06 0 94.21-16.57 130.3-44.83-46.13-.975-84.79-31.19-98.11-72.77 6.498 .974 12.99 1.624 19.82 1.624 9.421 0 18.84-1.3 27.61-3.573-48.08-9.747-84.14-51.98-84.14-102.1v-1.299c13.97 7.797 30.21 12.67 47.43 13.32-28.26-18.84-46.78-51.01-46.78-87.39 0-19.49 5.197-37.36 14.29-52.95 51.65 63.67 129.3 105.3 216.4 109.8-1.624-7.797-2.599-15.92-2.599-24.04 0-57.83 46.78-104.9 104.9-104.9 30.21 0 57.5 12.67 76.67 33.14 23.72-4.548 46.46-13.32 66.6-25.34-7.798 24.37-24.37 44.83-46.13 57.83 21.12-2.273 41.58-8.122 60.43-16.24-14.29 20.79-32.16 39.31-52.63 54.25z"
+                                        transform="translate(-256 -256)"></path>
+                                </g>
+                            </g>
+                        </svg><!-- <span class="fab fa-twitter me-3" data-fa-transform="grow-8"></span> Font Awesome fontawesome.com -->Follow
+                        @slick</a>
+                </div>
+                <div class="w-md-100 d-lg-none"></div>
+                <div class="col-md-auto col-lg-4 offset-lg-1">
+                    <div class="row">
+                        <div class="col-auto pe-5">
+                            <h6 class="text-100 fs-0 mb-3">About</h6>
+                            <ul class="list-unstyled ps-0 font-base">
+                                <li><a class="link-500" href="#!">Contact Us</a></li>
+                                <li class="mt-1"><a class="link-500" href="#!">Newsroom</a></li>
+                                <li class="mt-1"><a class="link-500" href="#!">Investores</a></li>
+                                <li class="mt-1"><a class="link-500" href="#!">Opportunities</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-auto">
+                            <h6 class="text-100 fs-0 mb-3">Account</h6>
+                            <ul class="list-unstyled ps-0 font-base">
+                                <li><a class="link-500" href="#!">Login</a></li>
+                                <li class="mt-1"><a class="link-500" href="#!">Sign Up</a></li>
+                                <li class="mt-1"><a class="link-500" href="#!">FAQ</a></li>
+                                <li class="mt-1"><a class="link-500" href="#!">Support</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="col-md-4 col-lg-auto text-lg-center ms-auto d-flex align-items-center mb-3 flex-md-column flex-wrap mt-5 mt-md-0">
+                    <a class="btn btn-danger me-3 me-lg-0" href="#!">Purchase Slick</a><a class="link-300 p-3"
+                        href="#!">or Learn More</a>
+                </div>
+            </div>
+            <div class="row mt-6">
+                <div class="col"><span class="text-600">© 2022 Slick. All Right Reserved</span><a class="link-500 mx-3"
+                        href="#"><u>Tearms of Service</u></a><a class="link-500" href="#"><u>Privacy Policy</u></a>
+                </div>
+            </div>
+        </div><!-- end of .container-->
+    </section>
+    <!-- <section> close ============================-->
+    <!-- ============================================-->
+
+
+    <!-- ===============================================-->
+    <!--    JavaScripts-->
+    <!-- ===============================================-->
+    <script src="https://prium.github.io/slick/v2.0.0/vendors/popper/popper.min.js"></script>
+    <script src="https://prium.github.io/slick/v2.0.0/vendors/bootstrap/bootstrap.min.js"></script>
+    <script src="https://prium.github.io/slick/v2.0.0/vendors/anchorjs/anchor.min.js"></script>
+    <script src="https://prium.github.io/slick/v2.0.0/vendors/is/is.min.js"></script>
+    <script src="https://prium.github.io/slick/v2.0.0/vendors/prism/prism.js"></script>
+    <script src="https://prium.github.io/slick/v2.0.0/vendors/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="https://prium.github.io/slick/v2.0.0/vendors/isotope-packery/packery-mode.pkgd.min.js"></script>
+    <script src="https://prium.github.io/slick/v2.0.0/vendors/fontawesome/all.min.js"></script>
+    <script src="https://prium.github.io/slick/v2.0.0/vendors/lodash/lodash.min.js"></script>
+    <script src="https://prium.github.io/slick/v2.0.0/vendors/imagesloaded/imagesloaded.pkgd.min.js"></script>
+    <script src="https://prium.github.io/slick/v2.0.0/vendors/gsap/gsap.js"></script>
+    <script src="https://prium.github.io/slick/v2.0.0/vendors/gsap/customEase.js"></script>
+    <script src="https://prium.github.io/slick/v2.0.0/assets/js/theme.js"></script>
+
+    <!-- script for scrolling the items manualy -->
+    <script>
+        function ScrollContent(items, btn) {
+            let content = document.getElementById(items);
+            if (btn == "l") {
+                console.log(btn)
+
+                content.scrollLeft -= 100;
+            }
+            else {
+
+                content.scrollLeft += 100;
+
+            }
+        }
+        
+
+        function SearchNow(obj){
+            let form = document.getElementById('search_form');
+            console.log(form)
+            let action  = document.getElementById('search_news_box').value
+            let newUrl = window.location.href+="search?q=";
+            window.location.href = newUrl+=action;
+        }
+      
+        
+    </script>
+
+</body>
+
+</html>
+
+<!-- about page https://prium.github.io/slick/v2.0.0/blocks/features-21.html -->

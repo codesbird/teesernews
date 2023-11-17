@@ -1,0 +1,197 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+    {{channelname}}
+{% endblock title %}
+
+{% block search %}
+
+{% load humanize %}
+{% load extras %}
+
+<div class="container search-box-container">
+    <form action="/search"  method="get" id="search_form"class="d-flex justify-content-center align-item-center h-max-content" >
+
+        <input name="query" id="search_news_box" type="search" class="search-news-box" placeholder="Search news">
+        
+        <input type="submit" class="search-news-btn" value="Search Now">
+    </form>
+   
+    
+      <div class="d-flex mb-3">
+        <div class="me-auto p-2" style="color: gray;">{{results|toStr}} results in {{time}} seconds</div>
+        <div class="p-2" >
+            <div class="dropdown">
+                <a class="dropdown-toggle" style="color: gray;" href="#" role="button" id="dropdownMenuLink"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-sort-down"></i>
+                </a>
+    
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+    
+                    <li><button class="dropdown-item" onclick="ShortComment('date')"><i
+                                class="bi bi-arrow-down"></i> Oldest first</button></li>
+                    <li><button class="dropdown-item" onclick="ShortComment('-date')"><i class="bi bi-arrow-up"></i>
+                            Newest first</button></li>
+    
+                </ul>
+            </div>
+        </div>
+        
+      </div>
+
+
+</div>
+{% endblock search %}
+
+{% block content %}
+
+<div class="container w-100">
+  
+
+
+    <div class="w-100 mx-0 my-2 text-center" >
+        <style>
+            .channel-icon div{
+                display:  none;
+
+            }
+            .channel-icon:hover div{
+                color: rgb(255, 255, 255);
+                display: block;
+            }
+            .channel-icon img{
+                width:150px;
+            }
+            .channel-icon:hover img{
+                filter:blur(5px);
+            }
+        </style>
+        {% if channels %}
+            {% for channel in channels %}
+            
+                <a class="hover-zoom channel-icon shadow-lg  position-relative overflow-hidden m-2" href="?name={{channel}}" target="">
+                    <img class="img-fluid mb-3 rounded shadow-lg" src="{{channel.icon}}"alt="forms">
+                    <div style="position:absolute;bottom:0px;width:90%;left:50%;transform:translateX(-50%);">
+                        <strong class="fs-5">{{channel.name}}</strong>
+                    </div>
+                </a> 
+        
+
+            {% endfor %}
+        {% else %}
+
+            {% if channelNews %}
+                <div style="display:flex;justify-content:center;flex-wrap:wrap;width:100%;" class="align-items:justify;">
+                    
+                        {% for item in channelNews %}
+                            {% if item.urlToImage %}
+                            <a class="m-2 hover-zoom bg-image navigation mx-1 nav-item col-6 col-lg-4 isotope-item" style="width:330px;" href="/news?q={{item.title}}"
+                                target="_blank">
+
+                                <div class="card bg-dark text-white position-relative" style="max-width: 600px;">
+                                    {% if 'video' in item.urlToImage %}
+                                    <iframe src="{{item.urlToImage}}">
+                                        
+                                    </iframe>
+                                    {% else %}
+                                    
+                                    <img src="{{item.urlToImage}}" class="card-img" alt="Stony Beach" />
+                                    {% endif %}
+                                    <div class="card-img-overlay" style="background-color: rgba(0, 0, 0, 0.3)">
+                                        <h5 class="card-title">{{item.source.name}}</h5>
+                                        <p class="card-text text-light">
+                                            {{item.title}}
+                                        </p>
+                                        <p class="card-text text-light position-absolute" style="bottom:6px;">By: {{item.author|title}}</p>
+                                        <p class="card-text text-light position-absolute" style="bottom:6px;">{{item.publishedAt|naturaltime}}</p>
+                                    </div>
+                                </div>
+                            </a>
+                            {% endif %}
+                        {% endfor %}
+                    
+            
+                </div>
+
+            {% else %}
+                
+                <h2 class="text-muted">No news find for - {{channelname}}</h2>
+            {% endif %}
+        
+        {% endif %}
+       
+        
+    
+    </div>
+</div>
+
+<div class="pagination mx-3">
+    <span class="step-links my-2">
+        {% if channelNews.has_previous %}
+            <button class="btn btn-sm bg-light text-dark" role="button" onclick="Pagination('1')">&laquo; first</button>
+            <button class="btn btn-sm bg-light text-dark" role="button" onclick="Pagination('{{channelNews.previous_page_number }}')">pre</button>
+        {% endif %}
+
+        <span class="current">
+            {% if channelNews.paginator.num_pages %}
+            Page {{ channelNews.number }} of {{ channelNews.paginator.num_pages }}.
+            {% endif %}
+        </span>
+
+        {% if channelNews.has_next %}
+            <button class="btn btn-sm bg-light text-dark" role="button" onclick="Pagination('{{channelNews.next_page_number}}')" >next</button>
+            <button class="btn btn-sm bg-light text-dark" role="button" onclick="Pagination('{{channelNews.paginator.num_pages}}')">last &raquo;</button>
+        {% endif %}
+    </span>
+</div>
+
+
+{% endblock content %}
+{% block js %}
+<script>
+    function ShortComment(short) {
+        const urlString = window.location.href
+
+        const url = new URL(urlString);
+
+        // Delete a parameter
+        url.searchParams.delete('or');
+
+        // Edit/add parameters
+        const newParams = {
+        or: short,
+        };
+        Object.keys(newParams).forEach(key => {
+            url.searchParams.set(key, newParams[key]);
+        });
+
+        window.location.href = url['href']
+    }
+
+    function Pagination(page){
+        
+        const urlString = window.location.href
+
+        const url = new URL(urlString);
+
+        // Delete a parameter
+        url.searchParams.delete('page');
+
+        // Edit/add parameters
+        const newParams = {
+        page: page,
+        };
+        Object.keys(newParams).forEach(key => {
+            url.searchParams.set(key, newParams[key]);
+        });
+
+        window.location.href = url['href']
+
+        console.log(url['href'])
+    }
+
+    
+</script>
+{% endblock js %}

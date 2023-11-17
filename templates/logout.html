@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}Loged out{% endblock title %}
+{% block content %}
+<div class="container mb-5" style="margin-top: -90px;">
+    <h1 class="text-info">The user {{user}} is loged out </h1>
+    <span class="fs-5 text-warning">You can log-in again </span>
+    <a href="/login/" class="bg-warning btn-sm btn text-light">Login</a>
+    <br>
+    <br>
+    <br>
+    <span class="mt-4 fs-5 text-warning">If you dont have any account  </span>
+    <a href="/signup/" class="bg-info btn-sm btn text-light">Create New</a>
+</div>
+{% endblock content %}

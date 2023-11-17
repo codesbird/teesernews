@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- ===============================================-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+
+
+    {% load static %}
+
+    <link rel="stylesheet"
+        href="https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/docs-app/css/dist/mdb5/standard/core.min.css">
+    <!--    Document Title-->
+    <!-- ===============================================-->
+    <title>Teezer News | {% block title %}{% endblock %}</title>
+
+    <!-- ===============================================-->
+    <!--    Favicons-->
+    <!-- ===============================================-->
+    <link rel="apple-touch-icon" sizes="180x180"href="{% static 'img/fovicon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/fovicon.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'img/fovicon.png' %}">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/fovicon.png' %}">
+
+    <link rel="manifest" href="https://prium.github.io/slick/v2.0.0/assets/img/favicons/manifest.json">
+    <meta name="msapplication-TileImage" content="https://prium.github.io/slick/v2.0.0/assets/img/favicons/mstile-150x150.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- ===============================================-->
+    <!--    Stylesheets-->
+    <!-- ===============================================-->
+    
+    <link href="{% static 'css/main.css' %}" rel="stylesheet" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&amp;family=Source+Sans+Pro:wght@200;300;400;600;700;900&amp;display=swap"
+        rel="stylesheet">
+
+    <!-- this is from bootstrap  -->
+    <!-- main css -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <!-- icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+
+    <!-- this is from bootstrap -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+    <style>
+        .search-news-box,
+        .search-news-btn {
+            border: 1px solid gray;
+            outline: none;
+
+            font-size: 18px;
+            border-radius: 4px;
+            background-color: rgba(0, 0, 0, 0.123);
+            color: rgb(204, 204, 204);
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        .search-news-btn:hover {
+            background-color: rgba(0, 0, 0, 0.363);
+            color: white;
+        }
+
+        .search-news-box {
+            min-width: 250px;
+            margin-right: 5px;
+            padding-left: 10px;
+            width: 100%;
+        }
+
+        .search-box-container {
+            z-index: 1;
+            display: block;
+            margin-bottom: 15px;
+            margin-top: -85px !important;
+        }
+
+        .news-cat::-webkit-scrollbar {
+            display: none;
+
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        @media only screen and (max-width: 760px) {
+            .search-box-container {
+                z-index: 1;
+                display: block;
+                margin-bottom: 15px;
+                margin-top: -20px !important;
+            }
+        }
+
+        @media only screen and (max-width:285px) {
+            .search-box-container div {
+                flex-wrap: wrap;
+            }
+
+            .search-box-container div input {
+                margin: 4px;
+            }
+        }
+
+        #usererror li {
+            color: orange;
+            list-style: none;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+
+<body class="text-dark  bg-light ">
+    {% load static %}
+
+    <nav class="navbar navbar-slick navbar-expand-lg bg-light fixed-top py-2 shodow-lg"
+        data-navbar-dark-on-scroll="data-navbar-dark-on-scroll">
+        <div class="container container-wide-xl">
+            <a class="navbar-brand ls-2 p-0 me-4 text-dark bg-light fs-1"
+                href="/"><i class="bi bi-upc-scan"></i></a>
+
+            <button class="navbar-toggler hamburger hamburger--emphatic" type="button" data-bs-toggle="collapse"
+                data-bs-target="#primaryNavbarCollapse" aria-controls="primaryNavbarCollapse" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <i class="bi bi-list text-dark bg-light"></i>
+            </button>
+
+            <div class="collapse navbar-collapse" id="primaryNavbarCollapse">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link  bg-light  text-dark" aria-current="page" href="/">Home</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link text-dark  bg-light" href="/channels">All Channels</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark  bg-light" href="/latest">Latest</a></li>
+
+                    <li class="nav-item">
+                        <!-- Button trigger modal -->
+                     <button type="button"  class="nav-link text-dark  bg-light" style="background-color:transparent;border:none;padding:0px;" data-bs-toggle="modal" data-bs-target="#categuriesitems">
+                         Categuries <span class="fa-solid fa-angle-down ms-1 fs--1 fw-bold"></span>
+                     </button>
+   
+                     </li>
+
+
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto align-items-lg-center">
+                    <li class="nav-item"><a class="nav-link text-dark  bg-light " href="sitemap.html">Sitemap</a></li>
+                    <li class="nav-item"><a class="text-dark  bg-light nav-link"
+                            href="https://prium.github.io/slick/v2.0.0/generator.html" target="_blank">Generator</a>
+                    </li>
+                    <li class="nav-item">
+                        {% if request.user.anonymous %}
+                        <a class="btn btn-outline-light rounded-pill btn-sm border-2 ms-lg-2" href="/signup"
+                            target="_blank">Sign up</a>
+                        {% else %}
+                        <a class="btn btn-outline-light rounded-pill btn-sm border-2 ms-lg-2 text-dark bg-light" 
+                        {% if request.user.is_anonymouse %} href="/login" {% else %} href="/profile" 
+                        {% endif %}>Profile</a>
+                        {% endif %}
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+    <div class="container">
+        {% block search %}{% endblock search %}
+        {% block content_box %}{% endblock content_box %}
+    </div>
+
+
+
+
+    <div class="container border-top ">
+        <footer class="py-5 pb-0 mb-0 ">
+
+            <div class="row">
+                <div class="col-md ">
+                    <div class="row">
+                        <div class="col">
+                            <a href="/" class="text-dark bg-light text-decoration-none">
+
+                                <h4>Teezer news</h4>
+                            </a>
+
+                        </div>
+                        <div class="col">
+                            <i class="bi bi-upc-scan fs-1"></i>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-2 mb-3">
+                    <h5>Services</h5>
+                    <ul class="nav flex-column">
+                        <li class="nav-item mb-2"><a href="#" class="p-0 text-dark bg-light ">Latest News</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="p-0 text-dark bg-light ">Tranding News</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="p-0 text-dark bg-light ">Sports</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="p-0 text-dark bg-light ">Politition</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="p-0 text-dark bg-light ">Education</a></li>
+                    </ul>
+                </div>
+
+
+
+                <div class="col-6 col-md-2 mb-3">
+                    <h5>About us</h5>
+                    <ul class="nav flex-column">
+                        <li class="nav-item mb-2"><a href="#" class="p-0 text-dark bg-light ">Home</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="p-0 text-dark bg-light ">Features</a></li>
+                        <li class="nav-item mb-2"><a href="/contact" class="p-0 text-dark bg-light ">Contact us</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="p-0 text-dark bg-light ">FAQs</a></li>
+                        <li class="nav-item mb-2"><a href="/aboutus" class="p-0 text-dark bg-light ">About</a></li>
+                    </ul>
+                </div>
+
+
+
+                <div class="col-md-3 offset-md-1 mb-3">
+
+                    <h5>Subscribe to our newsletter</h5>
+                    <p class="text-dark bg-light ">Monthly digest of what's new and exciting from us.</p>
+
+
+
+                    <div class="col w-100 p-0 m-0">
+                        <div class="d-flex justify-content-start align-items-center">
+
+                            <span class="m-auto mb-3 text-danger fs-4">Subcribers</span>
+
+                            <span class="m-auto mb-3 text-warning" id="countsubs">{{subs}}4</span>
+
+                            <button class="m-auto mb-3 btn btn-sm text-dark bg-light" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseWidthExample" aria-expanded="false"
+                                aria-controls="collapseWidthExample">
+                                <i class="bi bi-info-circle"></i>
+                            </button>
+
+                        </div>
+
+
+
+
+
+                        <p class="text-warning d-none" id="submessaage">You are already subscribed</p>
+                        <span class="text-warning m-1 d-none" id="emailreq">Email required</span>
+                        <div class="d-flex flex-column flex-sm-row align-items-center w-100 gap-2">
+
+                            <label for="newsletter1" class="m-auto mb-3 text-dark bg-light visually-hidden">Email address</label>
+                            <input type="email" class="form-control" placeholder="Email address" name="email"
+                                id="subemail">
+                            <button class="btn btn-sm px-2 py-1 btn-info" style="width: fit-content;height:fit-content;"
+                                onclick="Subscribe()" type="button" onclick="Subscribe()">Subscribe</button>
+                        </div>
+                        <span class="text-light my-2 d-none btn btn-sm fs-6 btn-danger">subscribed</span>
+
+                        <div class="m-1">
+                            <div class="collapse collapse-horizontal p-0" id="collapseWidthExample">
+                                <div class="card card-body p-2 text-justify text-dark bg-light shadow-lg">
+                                    Subscribe Teezer news to get new update of current news by notifications and mails
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ______________________________________________________________________________________ -->
+
+
+
+
+                </div>
+            </div>
+            <span>Change Theme</span>
+            <div class="form-check form-switch">
+                <input class="form-check-input bg-info" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                <label class="form-check-label" for="flexSwitchCheckDefault">Light</label>
+            </div>
+            <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top ">
+                <p class="text-dark bg-light">© 2022 Company, Inc. All rights reserved.</p>
+                <ul class="list-unstyled d-flex">
+                    <li class="ms-3"><a class="text-dark  bg-light" href="#"><i class="bi bi-facebook"></i></a></li>
+                    <li class="ms-3"><a class="text-dark  bg-light" href="#"><i class="bi bi-whatsapp"></i></a></li>
+                    <li class="ms-3"><a class="text-dark  bg-light" href="#"><i class="bi bi-instagram"></i></a></li>
+                </ul>
+            </div>
+        </footer>
+    </div>
+
+    <div class="modal fade" id="categuriesitems" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl text-dark bg-light">
+          <div class="modal-content position-relative">
+            <a role="button" type="button" class="position-absolute end-0 mx-3 text-dark bg-light" style="z-index:1;" data-bs-dismiss="modal" ><i class="bi bi-x-lg"></i></a>
+    
+            <div class="modal-body text-dark bg-light">
+                <div class="row text-center">
+                    <div class="col">
+                    
+                            <h5 class="text-dark bg-light text-start">
+                                <a href="#" class="text-decoration-none" target="" >News Home</a>
+                            </h5>
+                            <ul class="p-0">
+    
+                            <li class="nav-item text-start"><a class="text-decoration-none text-dark bg-light" href="#">City</a></li>
+                            <li class="nav-item text-start"><a class="text-decoration-none text-dark bg-light" href="#">Liveblogs</a></li>
+                            <li class="nav-item text-start"><a class="text-decoration-none text-dark bg-light" href="#">India</a></li>
+                            <li class="nav-item text-start"><a class="text-decoration-none text-dark bg-light" href="#">Elections 2023</a></li>
+                            <li class="nav-item text-start"><a class="text-decoration-none text-dark bg-light" href="#">Politics</a></li>
+                            <li class="nav-item text-start"><a class="text-decoration-none text-dark bg-light" href="#">World</a></li>
+                            <li class="nav-item text-start"><a class="text-decoration-none text-dark bg-light" href="#">Citizen Reporter</a></li>
+                            <li class="nav-item text-start"><a class="text-decoration-none text-dark bg-light" href="#">NRI</a></li>
+                            <li class="nav-item text-start"><a class="text-decoration-none text-dark bg-light" href="#">Headlines</a></li>
+                            <li class="nav-item text-start"><a class="text-decoration-none text-dark bg-light" href="#">Podcasts</a></li>
+                            <li class="nav-item text-start"><a class="text-decoration-none text-dark bg-light" href="#">Sunday Times</a></li>
+                            <li class="nav-item text-start"><a class="text-decoration-none text-dark bg-light" href="#">Good News</a></li>
+                            <li class="nav-item text-start"><a class="text-decoration-none text-dark bg-light" href="#">TOI Features</a></li>
+                            <li class="nav-item text-start"><a class="text-decoration-none text-dark bg-light" href="#">Specials</a></li>
+                            <li class="nav-item text-start"><a class="text-decoration-none text-dark bg-light" href="#">Times Fact Check</a></li>
+                            <li class="nav-item text-start"><a class="text-decoration-none text-dark bg-light" href="#">Good Governance</a></li>
+                            <li class="nav-item text-start"><a class="text-decoration-none text-dark bg-light" href="#">Times of a Better India</a></li>
+                                
+                            </ul>
+                            
+                    
+                    </div>
+                    
+                    <div class="col">
+                        <h5 class="text-dark bg-light text-start"><a href="#" class="text-decoration-none" target="" >Entertainment</a></h5>
+                        <ul class="p-0">
+                            
+                           <li class="text-start"><a href="#" class="text-dark bg-light text-decoration-none">Movie Reviews</a></li>
+                           <li class="text-start"><a href="#" class="text-dark bg-light text-decoration-none">Photos (ETIMES)</a></li>
+                           <li class="text-start"><a href="#" class="text-dark bg-light text-decoration-none">Music</a></li>
+                           <li class="text-start"><a href="#" class="text-dark bg-light text-decoration-none">Beauty Pageants</a></li>
+                           <li class="text-start"><a href="#" class="text-dark bg-light text-decoration-none">Events</a></li>
+                           <li class="text-start"><a href="#" class="text-dark bg-light text-decoration-none">Filmfare</a></li>
+    
+                        </ul>
+                        <h5 class="text-dark bg-light text-start"><a href="#" class="text-decoration-none" target="" >TV</a></h5>
+    
+                        <ul class="p-0">
+    
+                            <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light">TV News</a></li>
+                            <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light">TV Listings</a></li>
+                            <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light">ET Now</a></li>
+                            <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light">Zoom TV</a></li>
+                        </ul>
+                        <h5 class="text-dark bg-light text-start"><a href="#" class="text-decoration-none" target="" >Business</a></h5>
+    
+                        <ul class="p-0">
+    
+                               <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light">Startups</a></li>
+                               <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light">International Business</a></li>
+                            </ul>
+                    </div>
+                    <div class="col">
+                        <h5 class="text-dark bg-light text-start"><a href="#" class="text-decoration-none" target="" >Life Style</a></h5>
+    
+                        <ul class="p-0">
+                            <li class="text-start nav-item"><a href="#" class="text-decoration-none bg-light text-dark">Femina</a></li>
+                           <li class="text-start nav-item"><a href="#" class="text-decoration-none bg-light text-dark">Women</a></li>
+                           <li class="text-start nav-item"><a href="#" class="text-decoration-none bg-light text-dark">Travel</a></li>
+                           <li class="text-start nav-item"><a href="#" class="text-decoration-none bg-light text-dark">Recipes</a></li>
+                        </ul>
+                        
+                        <h5 class="text-dark bg-light text-start"><a href="#" class="text-decoration-none" target="" >Sports</a></h5>
+                        <ul class="p-0">
+                            
+                               <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light">Cricket</a></li>
+                               <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light">IPL 2023</a></li>
+                               <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light">Football</a></li>
+                               <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light">TOISA</a></li>
+    
+                        </ul>
+    
+                        <h5 class="text-dark bg-light text-start"><a href="#" class="text-decoration-none" target="" >Education</a></h5>
+    
+                        <ul class="p-0">
+                            
+                               <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light">Bennett University</a></li>
+                               <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light">TOI Student</a></li>
+                               <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light">Times Study Abroad</a></li>
+                               <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light">Jobs</a></li>
+    
+                        </ul>
+    
+    
+                    </div>
+                    <div class="col">
+                        <h5 class="text-dark bg-light text-start"><a href="#" class="text-decoration-none" target="" >Technology</a></h5>
+    
+                        <ul class="p-0">
+                            
+                           <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light">Latest News</a></li>
+                           <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light">Tech Photos</a></li>
+                           <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light">Latest Gadgets</a></li>
+                           <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light">Reviews</a></li>
+                           <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light">Compare Gadgets</a></li>
+                           <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light">Gadgets News</a></li>
+    
+                        </ul>
+    
+                        <h5 class="text-dark bg-light text-start"><a href="#" class="text-decoration-none" target="" >Services</a></h5>
+                        
+                        <ul class="p-0">
+                           <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light"> Mediawire</a></li>
+                           <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light"> Epaper</a></li>
+                           <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light"> Newspaper Subscription</a></li>
+                           <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light"> Classifieds</a></li>
+                           <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light"> Archives</a></li>
+                           <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light"> Be Swatantra</a></li>
+    
+                        </ul>
+                           
+                               
+                    </div>
+                </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+
+</body>
+<script src="https://prium.github.io/slick/v2.0.0/vendors/popper/popper.min.js"></script>
+<script src="https://prium.github.io/slick/v2.0.0/vendors/bootstrap/bootstrap.min.js"></script>
+
+<script src="{% static 'js/jquery-3.7.0.js' %}"></script>
+
+<script>
+    let webtheme = document.getElementById("flexSwitchCheckDefault");
+
+
+    
+    window.onload = (e)=>{
+
+        let theme = JSON.parse(localStorage.getItem('theme'));
+        if(theme['dark']==true){
+            webtheme.checked=1
+            ChangeTheme()
+        }
+        else{
+            webtheme.checked=0
+            ChangeTheme()
+        }
+        console.log('The theme is : ',theme['dark'])
+    }
+      
+
+    webtheme.addEventListener('click', (e) => {
+        ChangeTheme();
+    })
+
+    function ChangeTheme(){
+        try{
+            
+            
+            if (webtheme.checked) {
+               
+                localStorage.setItem("theme", JSON.stringify({'dark':true}));
+                
+                let darks = document.querySelectorAll('.bg-light')
+                webtheme.nextElementSibling.innerHTML = 'Dark'
+                for (let i = 0; i <= darks.length; i++) {
+                    darks[i].classList.replace('bg-light', 'bg-dark')
+                    darks[i].classList.replace('text-dark', 'text-light')
+                }
+                
+                
+            }
+            else {
+                localStorage.setItem("theme", JSON.stringify({'dark':false}));
+               
+                let darks = document.querySelectorAll('.bg-dark')
+                webtheme.nextElementSibling.innerHTML = 'Light'
+
+                for (let i = 0; i <= darks.length; i++) {
+                    darks[i].classList.replace('bg-dark', 'bg-light')
+                    darks[i].classList.replace('text-light', 'text-dark')
+                }
+            }
+            
+        }
+        catch{
+            console.log()
+        }
+    }
+   
+
+
+   
+
+
+    $.ajax({
+        type: "GET",
+        url: "/subscribe",
+        success: (data) => {
+            document.getElementById("countsubs").innerText = JSON.parse(data)['subs']
+        },
+        error: (err) => {
+            console.log(err)
+        }
+    })
+
+
+    function Subscribe(target) {
+        let email = document.getElementById("subemail")
+        let emailreq = document.getElementById("emailreq")
+
+        if (email.value == "") {
+            emailreq.classList.remove('d-none')
+            setTimeout((e) => {
+                emailreq.classList.add('d-none')
+            }, 5000)
+            return;
+        }
+
+        $.ajax({
+            type: "post",
+            url: "/subscribe",
+            data: { "email": email.value, "age": 21 },
+            success: (data) => {
+                data = JSON.parse(data)
+                document.getElementById("countsubs").innerText = data['subs']
+                console.log(data)
+                email.value = "";
+
+                if (data['status']) {
+
+                    email.nextElementSibling.classList.toggle('d-none')
+                    email.nextElementSibling.nextElementSibling.classList.toggle('d-none')
+                    setTimeout((e) => {
+                        email.nextElementSibling.classList.toggle('d-none')
+                        email.nextElementSibling.nextElementSibling.classList.toggle('d-none')
+                    }, 5000)
+                }
+                else {
+                    document.getElementById("submessaage").classList.remove('d-none')
+                    setTimeout((e) => {
+                        document.getElementById("submessaage").classList.add('d-none')
+                    }, 5000)
+                }
+            },
+            error: (error) => {
+                console.log(error)
+            }
+        })
+
+    }
+
+
+</script>
+
+{% block js %}
+{% endblock js %}
+
+</html>

@@ -1,0 +1,698 @@
+{% extends 'base2.html' %}
+
+{% block title %}
+{{news.title}}
+{% endblock title %}
+
+{% block style %}
+<style>
+    @media print {
+        #newsprintable {
+            /* Your printing styles here */
+            width: 100%;
+            height: auto;
+            background-color: transparent;
+            /* Add any other styles you need for printing */
+        }
+    }
+</style>
+{% endblock style %}
+
+
+{% block content_box %}
+<!-- ===============================================-->
+{% load humanize %}
+{% load extras %}
+{% load static %}
+
+<!--    Main Content-->
+<!-- ===============================================-->
+<!--    Main Content-->
+<div class="container row p-0 w-100 pt-5 m-auto mt-5">
+
+    <div class="container search-box-container" style="margin: 10px !important;">
+        <form action="/search" method="get" id="search_form"
+            class="d-flex justify-content-center align-item-center h-max-content">
+
+            <input name="query" id="search_news_box" type="search" class="search-news-box text-dark bg-light"
+                placeholder="Search news">
+
+            <input type="submit" class="search-news-btn bg-light text-dark" value="Search Now">
+        </form>
+
+
+    </div>
+
+    <div class="row mb-2 pb-2 ">
+        <div class="col">
+            {% if pages.has_previous %}
+            <a href="/news?q={{pages.previous.title}}" title="{{pages.previous.title}}"
+                class="btn btn-sm btn-info">previous</a>
+            <span class="m-2">News</span>
+            {% else %}
+            <a href="#" class="btn btn-sm btn-secondary" disabled>previous</a>
+            <span class="m-2">News</span>
+            {% endif %}
+        </div>
+        <div class="col d-flex justify-content-end align-items-center">
+            {% if pages.has_next %}
+            <a href="/news?q={{pages.next.title}}" class="btn btn-sm btn-info"
+                title="{{pages.next.title}}">next</a><span class="m-2">News</span>
+
+            {% else %}
+            <a href="#" disabled class="btn btn-sm btn-secondary">next</a><span class="m-2">News</span>
+            {% endif %}
+        </div>
+    </div>
+
+
+    <div class="col w-100">
+        <div class="w-100 " id="newsprintable">
+
+            <div class="row">
+                <div class="col">
+
+                    <h4 class="text-dark bg-light">{{news.title}}</h4>
+                    <p class="text-dark  bg-light">Published by: <span class="text-info"><a
+                                title="view all news of {{news.author}} channel" class="text-decoration-none"
+                                href="/channels?au={{news.author}}">{{news.author}}</a></span></p>
+                    <p class="text-dark  bg-light"> Released: <span class="text-info">
+                            {{news.publishedAt|naturaltime}}</span></p>
+                    <p class="text-dark  bg-light">Channel:
+                        <a title="view all news of {{news.channel}} channel" href="/channels?name={{news.channel}}"
+                            class="text-decoration-none">
+                            <img src="{{news.channel.icon}}" width="25px" height="20px" alt="">
+                            <strong>{{news.channel}}</strong>
+                        </a>
+                    </p>
+                    <div class="row border mb-2">
+                        <div class="col text-center"><i class="bi bi-eye"></i> <span>{{view_count|toStr}}</span></div>
+                        <div class="col text-center">
+
+                            <form method="POST" action="" id="likeform">
+                                {% csrf_token %}
+                                <input id="page_id" type="hidden" name="page_id" value="{{page_id}}">
+
+                                {% if is_liked %}
+                                <input id='like' type="hidden" name="action" value="unlike">
+                                <a id="likebtn" role="button">
+                                    <i id="heart" class="bi bi-heart-fill text-danger"></i>
+                                    <span id="likes_count" class="text-dark  bg-light">{{likes}}</span>
+                                </a>
+                                {% else %}
+                                <input id='like' type="hidden" name="action" value="like">
+                                <a id="likebtn" role="button">
+                                    <i id="heart" class="bi bi-heart"></i>
+                                    <span id="likes_count" class="text-dark  bg-light">{% if likes|length > 0 %}{{likes|length|toStr}}{% endif %}</span>
+                                </a>
+                                {% endif %}
+                            </form>
+                        </div>
+                        <div class="col text-center"> <a href="#user_comments"
+                                class="text-dark  bg-light text-decoration-none"><i role="button"
+                                    class="bi bi-chat-left-text text-dark  bg-light"></i><span
+                                    class="text-dark  bg-light">
+                                    {% if comments|length > 0%} {{comments|length|toStr}}
+                                    {% endif %} </span></a>
+                        </div>
+                        <div class="col text-center">
+                            <a role="button" onclick="DivPrint()">
+
+                                <i role="button" class="bi bi-file-arrow-down text-dark  bg-light"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    {% if 'video' in news.urlToImage %}
+                    <iframe src="{{news.urlToImage}}" controls="none" style="width: 100%;" frameborder="0"></iframe>
+                    {% else %}
+                    <img style="width: 100%;" src="{{news.urlToImage}}" id="printimg" alt="" class="show-image ">
+                    {% endif %}
+
+                </div>
+            </div>
+            <div class="row mt-3">
+                <p class="text-dark  bg-light"><strong>Description: </strong> {{news.description}}</p>
+            </div>
+
+
+            <div class="row">
+
+                <div class="row fs-6 text-left my-3">
+
+                    {{content|safe}}.
+                </div>
+
+            </div>
+
+        </div>
+
+        <hr class="text-dark bg-light">
+
+
+        <div class="row m-auto my-3">
+            <h3>Related news:</h3>
+            {% if relatednews %}
+
+            {% for related in relatednews %}
+
+            <a href="/news?q={{related.title}}" title="{{related.title}}" class="card m-auto my-2 overflow-hidden"
+                style="width: 150px;height:150px;">
+                <img style="max-width:100%;" src="{{related.urlToImage}}" alt="">
+                <span>{{related.title}}</span>
+            </a>
+            {% endfor %}
+            {% else %}
+            <h2 class="text-muted">No Relative news fond</h2>
+            {% endif %}
+        </div>
+
+    </div>
+    
+
+    <div class="col-md-2 shadow-sm mb-4 p-0 text-center h-100">
+        <h4 class="border-bottom p-2 w-100">Tranding news</h4>
+        {% if trandingnews %}
+        {% for tranding in trandingnews %}
+        <div class="card my-1 mx-auto  trandingImg" style="max-width:150px;display: inline-block;">
+            <div class="col">
+                <a href="/news?q={{tranding.title}}" title='{{tranding.title}}' class="text-info">
+                    <img style="width: 100%;" src="{{tranding.urlToImage}}" class="show-image" alt="">
+                </a>
+
+            </div>
+
+        </div>
+        {% endfor %}
+        {% else %}
+        <h2 class="text-muted">No tranding news fond</h2>
+        {% endif %}
+
+    </div>
+</div>
+
+<div class="row m-2">
+    <div class="col">
+        {% if pages.has_previous %}
+        <a href="/news?q={{pages.previous.title}}" class="btn btn-sm btn-info"
+            title="{{pages.previous.title}}">previous</a>
+        {% else %}
+        <a href="#" class="btn btn-sm btn-secondary" disabled>previous</a>
+        {% endif %}
+        <span class="m-2">News</span>
+    </div>
+    <div class="col d-flex justify-content-end align-items-center">
+        {% if pages.has_next %}
+        <a href="/news?q={{pages.next.title}}" class="btn btn-sm btn-info" title="{{pages.next.title}}">next</a><span
+            class="m-2">News</span>
+        {% else %}
+        <a href="#" class="btn btn-sm btn-secondary" disabled>next</a><span class="m-2">News</span>
+        {% endif %}
+    </div>
+</div>
+
+<div class="row " id="user_comments">
+    <div class="m-5 col-md-5">
+
+        <div class="row w-100">
+            <div class="col text-start">
+                <p class="text-left"><span class="fs-5 mx-2 text-info">Comments :</span>
+                    {% if comments|length > 0%}({{comments|length|toStr}} )
+                    {% endif %}
+                </p>
+
+            </div>
+            <div class="col text-end">
+                <div class="dropdown">
+                    <a class="btn btn-light dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-sort-down"></i>
+                    </a>
+
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+
+                        <li><button class="dropdown-item" onclick="ShortComment('date')"><i
+                                    class="bi bi-arrow-down"></i> Oldest first</button></li>
+                        <li><button class="dropdown-item" onclick="ShortComment('-date')"><i class="bi bi-arrow-up"></i>
+                                Newest first</button></li>
+
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-md-2 btn rounded-circle d-flex justify-content-center align-items-center p-0 overflow-hidden"
+                style="width: 40px;height:40px;display:inline;">
+
+                {% if not request.user.is_anonymouse %}
+                <img style="width: 100%;" src="{{request.user.profile.url}}" style="width:100%;height:100%;" alt="">
+
+                {% else %}
+                <i class="bi bi-person-circle"></i>
+                {% endif %}
+            </div>
+            <form method="POST" id="comment_form" action="/comments" class="p-0 m-0 col mx-2">
+                {% csrf_token %}
+                <input type="hidden" name="page_id" value="{{ page_id }}">
+                <input type="hidden" name="action" value="comment">
+                <textarea name="comment_content" rows="1" cols="20" class="form-control" placeholder="add a new comment"
+                    style="border:none;outline:none;border-bottom:1px dotted gray ;"></textarea>
+                <button type="submit" class="btn btn-sm btn-info my-2"><i class="bi bi-chat-left-text text-light"></i>
+                    Add Comment</button>
+            </form>
+        </div>
+        <!-- Display comments and their replies -->
+        {% for comment in comments %}
+        <div class="row">
+
+            <div class="col-md-2 btn rounded-circle overflow-hidden d-flex justify-content-center align-items-center p-0"
+                style="width: 40px;height:40px;display:inline;">
+                {% if comment.user.profile %}
+                <img style="width: 100%;" src="{{comment.user.profile.url}}" style="width:100%;height:100%;" alt="">
+
+                {% else %}
+                {% comment %} <img style="width: 100%;" src="https://cdn-icons-png.flaticon.com/512/1053/1053244.png"
+                    alt=""> {% endcomment %}
+                <i class="bi bi-person-circle"></i>
+                {% endif %}
+
+            </div>
+            <div class="col">
+                <div class="row">
+                    <div class="col">
+
+                        <p class="text-warning my-1"><span class="text-success"> {{comment.user.username|title}}
+                            </span>at <span class="text-primary">{{comment.created_at|naturaltime}}</span></p>
+                    </div>
+                    <div class="col">
+                        {% if not request.user.anonymous and request.user == comment.user%}
+
+                        <div class="dropdown">
+                            <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-three-dots-vertical"></i>
+
+                            </button>
+                            <ul class="dropdown-menu" style="width: max-content !important;">
+                                <li><a class="dropdown-item" onclick="EditComment('edit{{comment.id}}','open')"><i
+                                            class="bi bi-pen"></i> Edit</a></li>
+                                <li>
+                                    <form action="/comments" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="page_id" value="{{ page_id }}">
+                                        <input type="hidden" name="action" value="delete">
+                                        <input type="hidden" name="comment_id" value="{{ comment.id }}">
+
+                                        <button type="submit" role="button" class="dropdown-item" href="#"><i
+                                                class="bi bi-trash"></i> Delete</button>
+
+                                    </form>
+
+                                </li>
+                            </ul>
+                        </div>
+                        {% endif %}
+
+                    </div>
+                </div>
+                <p>{{ comment.content }}</p>
+                <form action="/comments" method="post" class="d-none" id="edit{{comment.id}}">
+                    {% csrf_token %}
+                    <input type="hidden" name="page_id" value="{{ page_id }}">
+                    <input type="hidden" name="action" value="upcomment">
+                    <input type="hidden" name="comment_id" value="{{ comment.id }}">
+
+                    <textarea name="comment_content" id="" cols="15" rows="1"
+                        class="form-control">{{comment.content}}</textarea>
+                    <div class="row w-100 mx-4 d-flex justify-content-end">
+                        <button style="width: max-content;" type="button"
+                            onclick="EditComment('edit{{comment.id}}','close')" role="button"
+                            class="m-2 btn btn-sm btn-secondary" href="#"><i class="bi bi-x"></i> cancle</button>
+                        <button style="width: max-content;" type="submit" role="button"
+                            class="m-2 btn btn-sm btn-warning" href="#"><i class="bi bi-save"></i> save</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+        <details class="d-flex justify-content-end text-secondary mx-5 my-0 mb-2">
+            <summary class="text-dark bg-light">Replies {% if comment.replies.all|length > 0 %}
+                ({{comment.replies.all|length|toStr}})
+                {% endif %}
+            </summary>
+            {% for reply in comment.replies.all %}
+            <div class="row">
+
+                <div class="col-md-2 btn rounded-circle d-flex justify-content-center align-items-center p-0 overflow-hidden"
+                    style="width: 40px;height:40px;display:inline;">
+                    {% if not request.user.is_anonymouse %}
+                    <img style="width: 100%;" src="{{request.user.profile.url}}" style="width:100%;height:100%;" alt="">
+
+                    {% else %}
+                    <i class="bi bi-person-circle"></i>
+                    {% endif %}
+
+                </div>
+                <div class="col">
+                    <div class="row">
+                        <div class="col">
+                            <p class="text-warning">{{ reply.user.username|title}} <span
+                                    class="text-muted">{{reply.created_at|naturaltime}}</span></p>
+
+                        </div>
+                        <div class="col">
+                            {% if not request.user.anonymous and request.user == reply.user%}
+                            <div class="dropdown">
+                                <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-three-dots-vertical"></i>
+
+                                </button>
+                                <ul class="dropdown-menu" style="width: max-content !important;">
+                                    <li>
+                                        <button type="button" class="dropdown-item"
+                                            onclick="EditComment('edit{{reply.id}}','open')"><i class="bi bi-pen"></i>
+                                            Edit</button>
+                                    </li>
+
+                                    <li>
+
+                                        <form action="/comments" method="post">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="page_id" value="{{ page_id }}">
+                                            <input type="hidden" name="action" value="delete">
+                                            <input type="hidden" name="comment_id" value="{{ reply.id }}">
+
+                                            <button type="submit" role="button" class="dropdown-item" href="#"><i
+                                                    class="bi bi-trash"></i> Delete</button>
+
+                                        </form>
+                                    </li>
+
+                                </ul>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <p>{{ reply.content }}</p>
+                    <form action="/comments" method="post" class="d-none" id="edit{{reply.id}}">
+                        {% csrf_token %}
+                        <input type="hidden" name="page_id" value="{{ page_id }}">
+                        <input type="hidden" name="action" value="upreplay">
+                        <input type="hidden" name="comment_id" value="{{ comment.id }}">
+
+                        <textarea name="reply_content" id="" cols="15" rows="1"
+                            class="form-control">{{reply.content}}</textarea>
+                        <div class="row w-100 mx-4 d-flex justify-content-end">
+                            <button style="width: max-content;" onclick="EditComment('edit{{reply.id}}','close')"
+                                type="button" role="button" class="m-2 btn btn-sm btn-secondary" href="#"><i
+                                    class="bi bi-x"></i> cancle</button>
+                            <button style="width: max-content;" type="submit" role="button"
+                                class="m-2 btn btn-sm btn-warning" href="#"><i class="bi bi-save"></i> save</button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+            {% empty %}
+            <p class="mx-2 text-warning">No replies yet.</p>
+            {% endfor %}
+
+            <!-- Add a reply form -->
+            <div class="row">
+
+                <div class="col-md-1 overflow-hidden p-0 btn rounded-circle d-flex justify-content-center align-items-center"
+                    style="width: 40px;height:40px;display:inline;">
+                    {% if not request.user.is_anonymouse %}
+                    <img style="width: 100%;" src="{{request.user.profile.url}}" style="width:100%;height:100%;" alt="">
+
+                    {% else %}
+                    <i class="bi bi-person-circle"></i>
+                    {% endif %}
+                </div>
+
+                <form method="POST" action="/comments" id="comment-form" class="col text-right w-100 mx-5">
+                    {% csrf_token %}
+                    <input type="hidden" name="page_id" value="{{ page_id }}">
+                    <input type="hidden" name="action" value="reply">
+                    <input type="hidden" name="comment_id" value="{{ comment.id }}">
+
+                    <textarea name="reply_content" rows="1" class="form-control"></textarea>
+                    <button type="submit" class="btn btn-sm btn-info my-2">Reply</button>
+
+                </form>
+            </div>
+
+        </details>
+
+        {% empty %}
+        <p>No comments yet.</p>
+        {% endfor %}
+        <!-- Add a comment form -->
+
+    </div>
+
+
+    <style>
+        .some-others img {
+            width: 50px !important;
+            height: 50px !important;
+        }
+    </style>
+
+    <div class="col border-start m-3">
+        <h4>Some others</h4>
+        {% if someother %}
+        {% for some in someother %}
+
+        <div class="card my-1 mx-auto" style="max-width:120px;display: inline-block;">
+            <div class="col">
+                <a href="/news?q={{some.title}}" title='{{some.title}}' class="text-info">
+                    <img style="width: 100%;" src="{{some.urlToImage}}" class="show-image" alt="">
+                </a>
+
+            </div>
+
+        </div>
+        {% endfor %}
+        {% else %}
+        <h2 class="text-muted">No other news found</h2>
+        {% endif %}
+
+    </div>
+    <!-- <div class="col"></div> -->
+</div>
+<!-- ===============================================-->
+
+<!--  -->
+<!-- <section> close ============================-->
+<!-- Image show pop up modal ============================================-->
+
+<!-- Creates the bootstrap modal where the image will appear -->
+<div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-body text-center position-relative">
+                <img src="" id="imagepreview" style="width: 100%; height:100%;">
+                <a role="button" download="teezerNews.png" id="IconDownalod" download
+                    class="fs-3 bi bi-file-arrow-down text-warning" style="position:absolute;bottom:4%;left:85%;"
+                    onmouseenter="DownloadIcon(this,'hover')" onmouseleave="DownloadIcon(this,'null')"></a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock content_box %}
+
+{% block js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js" integrity="sha512-z8IYLHO8bTgFqj+yrPyIJnzBDf7DDhWwiEsk4sY+Oe6J2M+WQequeGS7qioI5vT6rXgVRb4K1UVQC5ER7MKzKQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="{% static 'js/jquery-3.7.0.js' %}"></script>
+<script>
+    function EditComment(comment_id, status) {
+        let comment_box = document.getElementById(comment_id);
+
+        if (status == 'open') {
+
+            comment_box.classList.remove('d-none')
+        }
+        else {
+            comment_box.classList.add('d-none')
+
+        }
+
+        console(comment_box)
+    }
+
+    function ShortComment(short) {
+        window.location.href += '&order=' + short
+    }
+
+
+
+</script>
+
+<script src="http://www.openjs.com/scripts/events/keyboard_shortcuts/shortcut.js"></script>
+
+
+<script>
+    shortcut.add("ctrl+p", printDiv)
+
+    
+    
+    function DivPrint(){
+        printDiv()
+    }
+
+    function printDiv() {
+        
+        let divName = document.getElementById("newsprintable")
+        document.getElementById('printimg').setAttribute('style', 'width:700px;margin-auto;');
+        let originalContent = document.body.innerHTML
+        let htmldata = divName.innerHTML
+        console.log(htmldata)
+        document.body.innerHTML = htmldata
+        document.body.style.padding = '5px'
+    
+        window.print()
+
+        document.body.innerHTML = originalContent
+        document.body.style.padding = '0px'
+        document.getElementById('printimg').setAttribute('style', 'width:100%;');
+        
+    }
+</script>
+
+<script>
+    const { PDFDocument, StandardFonts, rgb } = PDFLib
+
+    async function createPdf(divContent) {
+        // Create a new PDFDocument
+        const pdfDoc = await PDFDocument.create()
+
+        // Embed the Times Roman font
+        const timesRomanFont = await pdfDoc.embedFont(StandardFonts.TimesRoman)
+
+        // Add a blank page to the document
+        const page = pdfDoc.addPage()
+
+        // Get the width and height of the page
+        
+        // Draw a string of text toward the top of the page
+        const { width, height } = page.getSize();
+
+        const htmlContent = await PDFLib.HTMLContent(
+                        divContent,
+                        { width, height }
+                );
+                
+        page.appendChild(htmlContent);
+
+        // Serialize the PDFDocument to bytes (a Uint8Array)
+        const pdfBytes = await pdfDoc.save()
+
+        const pdfBlob = new Blob([pdfBytes], { type: 'application/pdf' });
+
+        // Create a URL for the PDF Blob
+        const pdfUrl = URL.createObjectURL(pdfBlob);
+
+        // Open a new window with the PDF for download
+        window.open(pdfUrl);
+    }
+</script>
+
+<script>
+
+    let likebtn = document.getElementById('likebtn');
+    let like = document.getElementById('like');
+    let page_id = document.getElementById('page_id');
+    let csrfmiddlewaretoken = document.getElementsByName('csrfmiddlewaretoken')[0]
+    likebtn.addEventListener('click', (e) => {
+        $.ajax({
+            type: "POST",
+            url: '/likes',
+            data: { 'url': "/news?q=" + Path(), 'page_id': page_id.value, 'like': like.value, 'csrfmiddlewaretoken': csrfmiddlewaretoken.value }, // serializes the form's elements.
+            success: function (data) {
+                data = JSON.parse(data)
+                if (data['status'] == 'liked') {
+
+                    document.getElementById('heart').classList.replace('bi-heart', 'bi-heart-fill')
+                    like.value = 'unlike'
+                }
+                else {
+
+                    document.getElementById('heart').classList.replace('bi-heart-fill', 'bi-heart')
+                    like.value = 'like'
+
+                }
+                if (data['likes'] > 0) {
+
+                    document.getElementById('likes_count').innerHTML = data['likes']
+                }
+                else {
+
+                    document.getElementById('likes_count').innerHTML = ''
+                }
+            },
+            error: (e) => {
+                console.log(e)
+            }
+        });
+
+    })
+
+    function Path() {
+
+        let ur = window.location.href
+        let paramString = ur.split('?')[1];
+        let queryString = new URLSearchParams(paramString);
+
+        for (let pair of queryString.entries()) {
+            return pair[1]
+        }
+    }
+
+
+    $(".show-image").dblclick((e) => {
+        $('#imagepreview').attr('src', e.target.src); // here asign the image to the modal when the user click the enlarge link
+        $('#imagemodal').modal('show'); // imagemodal is the id attribute assigned to the bootstrap modal, then i use the show function
+        $('#IconDownalod').attr('href', e.target.src)
+    });
+
+
+
+
+    function DownloadIcon(target, obj) {
+        if (obj == 'hover') {
+            target.classList.replace('bi-file-arrow-down', 'bi-file-arrow-down-fill')
+        }
+        else {
+
+            target.classList.replace('bi-file-arrow-down-fill', 'bi-file-arrow-down')
+        }
+    }
+
+
+    window.onload = (e) => {
+        let items = document.querySelectorAll('p')
+        try {
+
+            for (let i = 0; i <= items.length; i++) {
+                if (!items[i].classList.contains('text-dark')) {
+                    items[i].classList.add('text-dark')
+                    items[i].classList.add('bg-light')
+                }
+            }
+        }
+        catch {
+            console.log()
+        }
+    }
+
+</script>
+
+{% endblock js %}

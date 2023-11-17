@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+
+<head>
+    {% load static %}
+
+    
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- ===============================================-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <link rel="stylesheet" href="https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/docs-app/css/dist/mdb5/standard/core.min.css">
+    <!--    Document Title-->
+    <!-- ===============================================-->
+    <title>Teezer News | {% block title %}{% endblock %}</title>
+
+    <!-- ===============================================-->
+    <!--    Favicons-->
+    <!-- ===============================================-->
+    <link rel="apple-touch-icon" sizes="180x180"href="{% static 'img/fovicon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/fovicon.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'img/fovicon.png' %}">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/fovicon.png' %}">
+
+        <meta name="msapplication-TileImage" content="{% static 'img/fovicon.png' %}">
+
+    <link rel="manifest" href="https://prium.github.io/slick/v2.0.0/assets/img/favicons/manifest.json">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- ===============================================-->
+    <!--    Stylesheets-->
+    <!-- ===============================================-->
+    <link href="{% static 'css/main.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&amp;family=Source+Sans+Pro:wght@200;300;400;600;700;900&amp;display=swap"
+        rel="stylesheet">
+
+    <!-- this is from bootstrap  -->
+    <!-- main css -->
+    {% comment %} <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous"> {% endcomment %}
+    <link rel="stylesheet" href="{% static '/resources/style/bootstrap.min.css' %}"></link>
+
+    <!-- icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+
+    <!-- this is from bootstrap -->
+    <style>
+        .search-news-box,
+        .search-news-btn {
+            border: 1px solid gray;
+            outline: none;
+
+            font-size: 18px;
+            border-radius: 4px;
+            background-color: rgba(0, 0, 0, 0.123);
+            color: rgb(204, 204, 204);
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        .search-news-btn:hover {
+            background-color: rgba(0, 0, 0, 0.363);
+            color: white;
+        }
+
+        .search-news-box {
+            min-width: 250px;
+            margin-right: 5px;
+            padding-left: 10px;
+            width: 100%;
+        }
+
+        .search-box-container {
+            z-index: 1;
+            display: block;
+            margin-bottom: 15px;
+            margin-top: -85px !important;
+        }
+
+        .news-cat::-webkit-scrollbar {
+            display: none;
+
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        @media only screen and (max-width: 760px) {
+            .search-box-container {
+                z-index: 1;
+                display: block;
+                margin-bottom: 15px;
+                margin-top: -20px !important;
+            }
+        }
+
+        @media only screen and (max-width:285px) {
+            .search-box-container div {
+                flex-wrap: wrap;
+            }
+
+            .search-box-container div input {
+                margin: 4px;
+            }
+        }
+
+        #usererror li {
+            color: orange;
+            list-style: none;
+            margin: 5px;
+        }
+    </style>
+</head>
+
+<body class="text-dark  bg-light ">
+    {% load humanize %}
+    {% load extras %}
+
+
+    <nav id="navbar" class="navbar navbar-slick navbar-expand-lg navbar-dark fixed-top py-2" data-navbar-dark-on-scroll="data-navbar-dark-on-scroll">
+        <div class="container container-wide-xl">
+            <a class="navbar-brand ls-2 p-0 me-4 fs-1"
+                href="/"><i class="bi bi-upc-scan"></i></a>
+
+            <button class="navbar-toggler hamburger hamburger--emphatic" type="button" data-bs-toggle="collapse"
+                data-bs-target="#primaryNavbarCollapse" aria-controls="primaryNavbarCollapse" aria-expanded="false"
+                aria-label="Toggle navigation"><span class="hamburger-box"><span
+                        class="hamburger-inner"></span></span><i class="bi bi-list"></i></button>
+
+            <div class="collapse navbar-collapse" id="primaryNavbarCollapse">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" aria-current="page" href="/">Home</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="/channels">All Channels</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/latest">Latest</a></li>
+
+                    <li class="nav-item">
+                       <!-- Button trigger modal -->
+                    <button type="button"  class="nav-link" style="background-color:transparent;border:none;padding:0px;" data-bs-toggle="modal" data-bs-target="#categuriesitems">
+                        Categuries <span class="fa-solid fa-angle-down ms-1 fs--1 fw-bold"></span>
+                    </button>
+  
+
+                           
+                    </li>
+
+                </ul>
+                <ul class="navbar-nav ms-auto align-items-lg-center">
+                    <li class="nav-item"><a class="nav-link" href="#">English</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#"
+                            target="_blank">Hindi</a></li>
+                    <li class="nav-item">
+                        {% if request.user.anonymous %}
+                        <a class="btn btn-outline-light rounded-pill btn-sm border-2 ms-lg-2" href="/signup"
+                            target="_blank">Sign up</a>
+                        {% else %}
+                        <a class="btn btn-outline-light rounded-pill btn-sm border-2 ms-lg-2"
+                            {% if request.user.is_anonymouse %}
+                            href="/login"
+                            {% else %}
+                            href="/profile"
+                            {% endif %}
+                             >Profile</a>
+                        {% endif %}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===============================================-->
+    <!--    Main Content-->
+    <!-- ===============================================-->
+
+    <main class="msain" id="top">
+
+        <!-- ============================================-->
+        <!-- <section> begin ============================-->
+
+        <section class="pt-7 pt-md-9 pb-0 text-center m-0">
+
+            {% block search %}{% endblock search %}
+
+            <div id="background_image" class="bg-holder overlay" id="background_image" style="background-image:url(https://prium.github.io/slick/v2.0.0/assets/img/header_showcase.jpg);background-position: top;">
+
+            </div>
+            <!--/.bg-holder-->
+
+            <div class="container p-0">
+                <div class="row flex-center mx-auto showcase-banner">
+
+                </div>
+
+            </div><!-- end of .container-->
+        </section>
+        <!-- <section> close ============================-->
+        <!-- ============================================-->
+
+        
+        <div class="container container-wide-xl showcase-content">
+            <div class="row w-100 justify-content-center align-items-center mx-auto mb-0 my-5">
+              
+                {% block slider %}{% endblock slider %}
+                
+
+                
+                {% block slide_news %}{% endblock slide_news %}
+                
+            </div>
+
+
+
+        </div>
+
+        {% block content %}
+        {% endblock content %}
+
+        
+        
+    </main><!-- ===============================================-->
+
+    <!--    End of Main Content-->
+    <!-- ===============================================-->
+
+    <!--===============================================-->
+    <!--    Footer-->
+    <!--===============================================-->
+
+    <!-- ============================================-->
+    <!-- <section> begin ============================-->
+        
+        <section class="py-6 shadow-lg text-dark bg-light" id="footer-9">
+            <a href="#" class="position-absolute end-0 mx-3"><i class="bi bi-arrow-up-circle-fill fs-1 text-warning"></i></a>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-lg-4 mb-4 mb-lg-0 mb-5 mb-lg-0">
+                    <a class="navbar-brand ls-2 my-2 p-0 me-4 text-light fs-1 bg-light text-dark" href="/"><i class="bi bi-upc-scan m-2"></i> Teezer News</a>
+
+                    <h4 class="lh-3 bg-light text-dark">Empowering Designers, Makers, Doers and Creatives </h4>
+                    <p class="text-500 bg-light text-dark">Founded in 2010 and based in Estonia, Slick is ranked among the top 10 companies
+                        in the entire world. </p>
+
+                        <span class="bg-light text-dark">Change Theme</span>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input bg-info" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                            <label class="form-check-label bg-light text-dark" for="flexSwitchCheckDefault">Light</label>
+                        </div>
+                </div>
+                
+                <div class="col-md-auto col-lg-4 offset-lg-1">
+                    <div class="row">
+                        <div class="col-auto pe-5">
+                            <h6 class="text-100 fs-0 mb-3 bg-light text-dark">Comapny</h6>
+                            <ul class="list-unstyled ps-0 font-base">
+                                <li><a class="link-500" href="/contact">Contact Us</a></li>
+                                <li class="mt-1"><a class="link-500" href="#!">Newsroom</a></li>
+                                <li class="mt-1"><a class="link-500" href="/aboutus">About</a></li>
+                                <li class="mt-1"><a class="link-500" href="#!">Opportunities</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-auto">
+                            <h6 class="text-100 fs-0 mb-3 bg-light text-dark">Account</h6>
+                            <ul class="list-unstyled ps-0 font-base">
+                                <li><a class="link-500" href="/login">Login</a></li>
+                                <li class="mt-1"><a class="link-500" href="/signup">Sign Up</a></li>
+                                <li class="mt-1"><a class="link-500" href="#!">FAQ</a></li>
+                                <li class="mt-1"><a class="link-500" href="#!">Support</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col w-100 p-0 m-0">
+                    <div class="row">
+                        <div class="col">
+                            <p class="text-danger fs-6">Subcribers</p>
+                        </div>
+                        <div class="col"><span class="m-5 text-warning" id="countsubs">{{subs}}</span></div>
+                        <div class="col">
+                            <button class="btn btn-sm btn-dark text-light" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseWidthExample" aria-expanded="false"
+                                aria-controls="collapseWidthExample">
+                                <i class="bi bi-info-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <p class="text-warning d-none" id="submessaage">You are already subscribed</p>
+                    <span class="text-warning m-1 d-none" id="emailreq">Email required</span>
+                    <input type="email" style="font-size: 14px;outline:none;" class="rounded w-100"
+                        placeholder="email address" name="email" id="subemail">
+                    <input type="submit" class="btn btn-light text-danger btn-sm my-2" value="Subscribe"
+                        onclick="Subscribe()">
+                    <span class="text-light my-2 d-none btn btn-sm fs-6 btn-danger">subscribed</span>
+
+                    <div class="m-1">
+                        <div class="collapse collapse-horizontal p-0" id="collapseWidthExample">
+                            <div class="card card-body p-2 text-justify text-dark bg-light">
+                                Subscribe Teezer news to get new update of current news by notifications and mails
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+
+            <div class="row mt-6">
+                <div class="col"><span class="text-600">© 2022 Slick. All Right Reserved</span><a class="link-500 mx-3"
+                        href="#"><u>Tearms of Service</u></a><a class="link-500" href="#"><u>Privacy Policy</u></a>
+                </div>
+            </div>
+        </div><!-- end of .container-->
+    </section>
+    <!-- <section> close ============================-->
+    <!-- ============================================-->
+    <!-- Creates the bootstrap modal where the image will appear -->
+    <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <div class="modal-body text-center">
+                    <img src="" id="imagepreview" style="width: 100%; height:100%;">
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+      <!-- Modal -->
+  <div class="modal fade" id="categuriesitems" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl text-dark bg-light">
+      <div class="modal-content position-relative">
+        <a role="button" type="button" class="position-absolute end-0 mx-3 text-dark bg-light" style="z-index:1;" data-bs-dismiss="modal" ><i class="bi bi-x-lg"></i></a>
+
+        <div class="modal-body text-dark bg-light">
+            <div class="row text-center">
+                <div class="col">
+                
+                        <h5 class="text-dark bg-light text-start">
+                            <a href="#" class="text-decoration-none" target="" >News Home</a>
+                        </h5>
+                        <ul class="p-0">
+
+                        <li class="nav-item text-start"><a class="text-decoration-none text-dark bg-light" href="#">City</a></li>
+                        <li class="nav-item text-start"><a class="text-decoration-none text-dark bg-light" href="#">Liveblogs</a></li>
+                        <li class="nav-item text-start"><a class="text-decoration-none text-dark bg-light" href="#">India</a></li>
+                        <li class="nav-item text-start"><a class="text-decoration-none text-dark bg-light" href="#">Elections 2023</a></li>
+                        <li class="nav-item text-start"><a class="text-decoration-none text-dark bg-light" href="#">Politics</a></li>
+                        <li class="nav-item text-start"><a class="text-decoration-none text-dark bg-light" href="#">World</a></li>
+                        <li class="nav-item text-start"><a class="text-decoration-none text-dark bg-light" href="#">Citizen Reporter</a></li>
+                        <li class="nav-item text-start"><a class="text-decoration-none text-dark bg-light" href="#">NRI</a></li>
+                        <li class="nav-item text-start"><a class="text-decoration-none text-dark bg-light" href="#">Headlines</a></li>
+                        <li class="nav-item text-start"><a class="text-decoration-none text-dark bg-light" href="#">Podcasts</a></li>
+                        <li class="nav-item text-start"><a class="text-decoration-none text-dark bg-light" href="#">Sunday Times</a></li>
+                        <li class="nav-item text-start"><a class="text-decoration-none text-dark bg-light" href="#">Good News</a></li>
+                        <li class="nav-item text-start"><a class="text-decoration-none text-dark bg-light" href="#">TOI Features</a></li>
+                        <li class="nav-item text-start"><a class="text-decoration-none text-dark bg-light" href="#">Specials</a></li>
+                        <li class="nav-item text-start"><a class="text-decoration-none text-dark bg-light" href="#">Times Fact Check</a></li>
+                        <li class="nav-item text-start"><a class="text-decoration-none text-dark bg-light" href="#">Good Governance</a></li>
+                        <li class="nav-item text-start"><a class="text-decoration-none text-dark bg-light" href="#">Times of a Better India</a></li>
+                            
+                        </ul>
+                        
+                
+                </div>
+                
+                <div class="col">
+                    <h5 class="text-dark bg-light text-start"><a href="#" class="text-decoration-none" target="" >Entertainment</a></h5>
+                    <ul class="p-0">
+                        
+                       <li class="text-start"><a href="#" class="text-dark bg-light text-decoration-none">Movie Reviews</a></li>
+                       <li class="text-start"><a href="#" class="text-dark bg-light text-decoration-none">Photos (ETIMES)</a></li>
+                       <li class="text-start"><a href="#" class="text-dark bg-light text-decoration-none">Music</a></li>
+                       <li class="text-start"><a href="#" class="text-dark bg-light text-decoration-none">Beauty Pageants</a></li>
+                       <li class="text-start"><a href="#" class="text-dark bg-light text-decoration-none">Events</a></li>
+                       <li class="text-start"><a href="#" class="text-dark bg-light text-decoration-none">Filmfare</a></li>
+
+                    </ul>
+                    <h5 class="text-dark bg-light text-start"><a href="#" class="text-decoration-none" target="" >TV</a></h5>
+
+                    <ul class="p-0">
+
+                        <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light">TV News</a></li>
+                        <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light">TV Listings</a></li>
+                        <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light">ET Now</a></li>
+                        <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light">Zoom TV</a></li>
+                    </ul>
+                    <h5 class="text-dark bg-light text-start"><a href="#" class="text-decoration-none" target="" >Business</a></h5>
+
+                    <ul class="p-0">
+
+                           <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light">Startups</a></li>
+                           <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light">International Business</a></li>
+                        </ul>
+                </div>
+                <div class="col">
+                    <h5 class="text-dark bg-light text-start"><a href="#" class="text-decoration-none" target="" >Life Style</a></h5>
+
+                    <ul class="p-0">
+                        <li class="text-start nav-item"><a href="#" class="text-decoration-none bg-light text-dark">Femina</a></li>
+                       <li class="text-start nav-item"><a href="#" class="text-decoration-none bg-light text-dark">Women</a></li>
+                       <li class="text-start nav-item"><a href="#" class="text-decoration-none bg-light text-dark">Travel</a></li>
+                       <li class="text-start nav-item"><a href="#" class="text-decoration-none bg-light text-dark">Recipes</a></li>
+                    </ul>
+                    
+                    <h5 class="text-dark bg-light text-start"><a href="#" class="text-decoration-none" target="" >Sports</a></h5>
+                    <ul class="p-0">
+                        
+                           <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light">Cricket</a></li>
+                           <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light">IPL 2023</a></li>
+                           <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light">Football</a></li>
+                           <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light">TOISA</a></li>
+
+                    </ul>
+
+                    <h5 class="text-dark bg-light text-start"><a href="#" class="text-decoration-none" target="" >Education</a></h5>
+
+                    <ul class="p-0">
+                        
+                           <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light">Bennett University</a></li>
+                           <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light">TOI Student</a></li>
+                           <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light">Times Study Abroad</a></li>
+                           <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light">Jobs</a></li>
+
+                    </ul>
+
+
+                </div>
+                <div class="col">
+                    <h5 class="text-dark bg-light text-start"><a href="#" class="text-decoration-none" target="" >Technology</a></h5>
+
+                    <ul class="p-0">
+                        
+                       <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light">Latest News</a></li>
+                       <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light">Tech Photos</a></li>
+                       <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light">Latest Gadgets</a></li>
+                       <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light">Reviews</a></li>
+                       <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light">Compare Gadgets</a></li>
+                       <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light">Gadgets News</a></li>
+
+                    </ul>
+
+                    <h5 class="text-dark bg-light text-start"><a href="#" class="text-decoration-none" target="" >Services</a></h5>
+                    
+                    <ul class="p-0">
+                       <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light"> Mediawire</a></li>
+                       <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light"> Epaper</a></li>
+                       <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light"> Newspaper Subscription</a></li>
+                       <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light"> Classifieds</a></li>
+                       <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light"> Archives</a></li>
+                       <li class="text-start"><a href="#" class="text-decoration-none text-dark bg-light"> Be Swatantra</a></li>
+
+                    </ul>
+                       
+                           
+                </div>
+            </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+    <!-- ===============================================-->
+    <!--    JavaScripts-->
+    <!-- ===============================================-->
+    <script src="https://prium.github.io/slick/v2.0.0/vendors/popper/popper.min.js"></script>
+    <script src="https://prium.github.io/slick/v2.0.0/vendors/bootstrap/bootstrap.min.js"></script>
+    <script src="https://prium.github.io/slick/v2.0.0/vendors/anchorjs/anchor.min.js"></script>
+    <script src="https://prium.github.io/slick/v2.0.0/vendors/is/is.min.js"></script>
+    <script src="https://prium.github.io/slick/v2.0.0/vendors/prism/prism.js"></script>
+    <script src="https://prium.github.io/slick/v2.0.0/vendors/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="https://prium.github.io/slick/v2.0.0/vendors/isotope-packery/packery-mode.pkgd.min.js"></script>
+    <script src="https://prium.github.io/slick/v2.0.0/vendors/fontawesome/all.min.js"></script>
+    <script src="https://prium.github.io/slick/v2.0.0/vendors/lodash/lodash.min.js"></script>
+    <script src="https://prium.github.io/slick/v2.0.0/vendors/imagesloaded/imagesloaded.pkgd.min.js"></script>
+    <script src="https://prium.github.io/slick/v2.0.0/vendors/gsap/gsap.js"></script>
+    <script src="https://prium.github.io/slick/v2.0.0/vendors/gsap/customEase.js"></script>
+    <script src="https://prium.github.io/slick/v2.0.0/assets/js/theme.js"></script>
+    <script src="{% static 'js/jquery-3.7.0.js' %}"></script>
+
+    <!-- script for scrolling the items manualy -->
+    <script>
+        let subscribersbtn = document.getElementById("subscribersbtn");
+        let webtheme = document.getElementById("flexSwitchCheckDefault");
+
+        window.onload = (e)=>{
+
+            let theme = JSON.parse(localStorage.getItem('theme'));
+            if(theme['dark']==true){
+                webtheme.checked=1
+                ChangeTheme()
+            }
+            else{
+                webtheme.checked=0
+                ChangeTheme()
+            }
+            console.log('The theme is : ',theme['dark'])
+        }
+           
+        
+
+        $.ajax({
+            type: "GET",
+            url: "/subscribe",
+            success: (data) => {
+                document.getElementById("countsubs").innerText = JSON.parse(data)['subs']
+            },
+            error: (err) => {
+                console.log(err)
+            }
+        })
+
+        function ScrollContent(items, btn) {
+            let content = document.getElementById(items);
+            if (btn == "l") {
+                content.scrollLeft -= 100;
+            }
+            else {
+
+                content.scrollLeft += 100;
+
+            }
+        }
+
+
+        function SearchNow(obj) {
+            let form = document.getElementById('search_form');
+            console.log(form)
+            let action = document.getElementById('search_news_box').value
+            let newUrl = window.location.href += "search?q=";
+            window.location.href = newUrl += action;
+        }
+
+
+        function Subscribe(target) {
+            let email = document.getElementById("subemail")
+            let emailreq = document.getElementById("emailreq")
+
+            if (email.value == "") {
+                emailreq.classList.remove('d-none')
+                setTimeout((e) => {
+                    emailreq.classList.add('d-none')
+                }, 5000)
+                return;
+            }
+
+            $.ajax({
+                type: "post",
+                url: "/subscribe",
+                data: { "email": email.value, "age": 21 },
+                success: (data) => {
+                    data = JSON.parse(data)
+                    document.getElementById("countsubs").innerText = data['subs']
+                    console.log(data)
+                    email.value = "";
+
+                    if (data['status']) {
+
+                        email.nextElementSibling.classList.toggle('d-none')
+                        email.nextElementSibling.nextElementSibling.classList.toggle('d-none')
+                        setTimeout((e) => {
+                            email.nextElementSibling.classList.toggle('d-none')
+                            email.nextElementSibling.nextElementSibling.classList.toggle('d-none')
+                        }, 5000)
+                    }
+                    else {
+                        document.getElementById("submessaage").classList.remove('d-none')
+                        setTimeout((e) => {
+                            document.getElementById("submessaage").classList.add('d-none')
+                        }, 5000)
+                    }
+                },
+                error: (error) => {
+                    console.log(error)
+                }
+            })
+
+        }
+
+        $('.show-image').click((e) => {
+            target = $(this)
+            console.log(target)
+        })
+
+
+        $(".show-image").dblclick((e) => {
+            $('#imagepreview').attr('src', e.target.src); // here asign the image to the modal when the user click the enlarge link
+            $('#imagemodal').modal('show'); // imagemodal is the id attribute assigned to the bootstrap modal, then i use the show function
+        });
+
+        
+
+        webtheme.addEventListener('change', (e) => {
+            ChangeTheme()
+        })
+
+        function ChangeTheme(){
+            try{
+                
+                
+                if (webtheme.checked) {
+                   
+                    localStorage.setItem("theme", JSON.stringify({'dark':true}));
+                    
+                    let darks = document.querySelectorAll('.bg-light')
+                    webtheme.nextElementSibling.innerHTML = 'Dark'
+                    for (let i = 0; i <= darks.length; i++) {
+                        darks[i].classList.replace('bg-light', 'bg-dark')
+                        darks[i].classList.replace('text-dark', 'text-light')
+                    }
+                    
+                    
+                }
+                else {
+                    localStorage.setItem("theme", JSON.stringify({'dark':false}));
+                   
+                    let darks = document.querySelectorAll('.bg-dark')
+                    webtheme.nextElementSibling.innerHTML = 'Light'
+    
+                    for (let i = 0; i <= darks.length; i++) {
+                        darks[i].classList.replace('bg-dark', 'bg-light')
+                        darks[i].classList.replace('text-light', 'text-dark')
+                    }
+                }
+                
+            }
+            catch{
+                console.log()
+            }
+        }
+       
+
+
+
+    </script>
+
+    {% block js %}
+    {% endblock js %}
+</body>
+
+</html>
+
+<!-- about page https://prium.github.io/slick/v2.0.0/blocks/features-21.html -->

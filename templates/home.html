@@ -1,0 +1,278 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock title %}
+
+{% block search %}
+<div class="container search-box-container">
+    <form action="/search" method="get" id="search_form"
+        class="d-flex justify-content-center align-item-center h-max-content my-2">
+
+        <input name="query" id="search_news_box" type="search" class="search-news-box" placeholder="Search news">
+
+        <input type="submit" class="search-news-btn" value="Search Now">
+    </form>
+
+    
+</div>
+{% endblock search %}
+
+
+{% block slider %}
+{% load humanize %}
+{% load extras %}
+
+<div class="container container-wide-xl showcase-content">
+    {% comment %} contening news channels names {% endcomment %}
+    <a href="/channels">View all</a>
+    <div style="display:flex;" class="align-items:center !important;">
+        <a role="button" onclick="ScrollContent('cataguries','l')" class="pr-2 scroll-btn"><i
+                class="fs-2 bi bi-chevron-compact-left"></i></button>
+            <ul id="cataguries" class="h-100 news-cat px-1 showcase-nav w-100 d-flex align-item-center  overflow-auto"
+                style="margin-top: 10px;" data-filter-nav>
+                <li class="nav-item mb-3"><a class="isotope-nav" href="#!" data-filter="*">ALL</a></li>
+                {% for channel in channels %}
+                <li class="nav-item mb-3" style="min-width:max-content;"><a class="isotope-nav text-uppercase"
+                        href="/channels?name={{channel}}" data-filter=".Hindustan-times">{{channel}}</a></li>
+
+                {% endfor %}
+
+            </ul>
+            <a role="button" onclick="ScrollContent('cataguries','r')" class="pl-2 scroll-btn"><i
+                    class="fs-2 bi bi-chevron-compact-right"></i></button>
+    </div>
+
+</div>
+
+
+{% endblock slider %}
+
+{% block slide_news %}
+<div style="display:flex" class="align-items:center !important;">
+    <a role="button" onclick="ScrollContent('news-box','l')" class="pr-2 scroll-btn"><i
+            class="fs-2 bi bi-chevron-compact-left"></i></button>
+        <ul id="news-box" class="h-100 news-cat px-1 showcase-nav w-100 d-flex align-item-center  overflow-auto"
+            style="margin-top: 0px;" data-filter-nav>
+
+            {% for item in news %}
+            {% if item.urlToImage %}
+            <a class="navigation mx-1 nav-item col-6 col-lg-4 isotope-item" href="/news?q={{item.title}}"
+                target="_blank">
+
+                <div class="card hover-zoom bg-image bg-dark text-white position-relative" style="max-width: 600px;">
+                    <img src="{{item.urlToImage}}" class="card-img show-image" alt="Stony Beach"
+                        style="width:%;height:90%;" />
+                    <div class="card-img-overlay" style="background-color: rgba(0, 0, 0, 0.3)">
+                        <h5 class="card-title">{{item.source.name}}</h5>
+                        <p class="card-text text-light">
+                            {{item.title}}
+                        </p>
+                        <p class="card-text text-light position-absolute" style="bottom:5px;">
+                            {{item.publishedAt|naturaltime}}</p>
+                    </div>
+                </div>
+            </a>
+
+            {% endif %}
+            {% endfor %}
+
+
+
+
+        </ul>
+        <a role="button" onclick="ScrollContent('news-box','r')" class="pl-2 scroll-btn"><i
+                class="fs-2 bi bi-chevron-compact-right"></i></button>
+</div>
+{% endblock slide_news %}
+
+{% block content %}
+<hr>
+
+<div class="row mt-5 mx-0 d-flex justify-content-center align-item-center w-100 p-1">
+    {% for item in topnews %}
+    {% if item.urlToImage %}
+
+    <a href="/news?q={{item.title}}" class="hover-zoom bg-image card bg-dark text-white m-1 p-0 poition-relative"
+        style="max-width:390px;">
+        <img src="{{item.urlToImage}}" style="filter:blur(2px);width:100%;height:100%;" class="card-img show-image"
+            alt="...">
+            
+        <div class="card-img-overlay">
+            
+            <h5 class="card-title text-light">{{item.title|safe}}</h5>
+            {% comment %} <p class="card-text text-light">{{item.content|slice:100}}</p> {% endcomment %}
+            <p class="card-text text-light position-absolute" style="bottom:5px;">Published:
+                {{item.publishedAt|naturaltime}}</p>
+            
+        </div>
+        
+    </a>
+    {% endif %}
+    {% endfor %}
+</div>
+
+
+<div class="container my-4">
+    <div class="d-flex justify-content-justify align-items-center flex-wrap">
+
+        {% for hnw in tnews%}
+        {% if hnw.urlToImage %}
+
+        <div class="card m-auto my-1" style="max-width:520px;">
+            <div class="row g-0 p-2">
+                <div class="col-md hover-zoom bg-image">
+                    <img style="width: 100%;height:100%;" src="{{hnw.urlToImage}}" class="img-fluid rounded show-image"
+                        alt="...">
+                </div>
+                <div class="col">
+                    <div class="card-body">
+                        <h5 class="card-title">{{hnw.title}}</h5>
+
+                        </p>
+                    </div>
+                    <span class="m-2 text-dark">Published: {{hnw.publishedAt|naturaltime}}</span>
+                </div>
+                <p class="card-text m-1 w-100">{{hnw.description|safe}}</p>
+                <div class="row d-flex m-0 p-0 align-items-center">
+                    <div class="col-md-auto">
+                        <a href="/news?q={{hnw.title}}" style="width: max-content;margin:auto;"
+                            class="m-3 btn btn-sm text-warning ">Countinue Reading</a>
+                    </div>
+                    <div class="col mb-1">
+                        <button class="btn" newsid="{{hnw.title}}" onclick="ScaleUPNews(this)"><i class="bi bi-arrows-fullscreen"></i></button>
+
+                        <details class="btn">
+                            <summary>Share</summary>
+
+                            <a target="_" href='whatsapp://send?text={{hnw.url}} {{hnw.urlToImage}}'
+                                class="btn bg-success text-light"><i class="bi bi-whatsapp"></i></a>
+                            <a target="_"
+                                href="https://www.facebook.com/sharer/sharer.php?u={{hnw.url}} {{hnw.urlToImage}}"
+                                class="m-1 btn bg-primary text-light"><i class="bi bi-facebook"></i></a>
+                            <a target="_"
+                                href="https://www.linkedin.com/sharing/share-offsite/?url={{hnw.url}} {{hnw.urlToImage}}"
+                                class="m-1 btn bg-primary text-light"><i class="bi bi-linkedin"></i></a>
+                            <a target="_" href="https://twitter.com/intent/tweet?text={{hnw.url}} {{hnw.urlToImage}}"
+                                class="m-1 btn bg-info text-light"><i class="bi bi-twitter"></i></a>
+                            <a target="_" role="button" newsid="{{hnw.title}}" onclick="ShareNews(this)"
+                                class="m-1 btn bg-warning text-light"><i class="bi bi-share-fill"></i></a>
+                        </details>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" hidden id="modelbox" data-bs-toggle="modal" data-bs-target="#exampleModal"
+    data-bs-whatever="@getbootstrap">Open modal for @getbootstrap</button>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h4 id="modaltitle"></h4>
+                <h5><span>Auther</span>: <b id="auther"></b> | 4 days, 2 hours ago</h5>
+                <img id="modalImg" style="width: 100%;" class="show-image" alt="">
+
+                <div class="mt-3">
+                    <p id="modaldece"></p>
+                    <p id="modalcont"></p>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <!-- <a id="modallink" type="button" class="btn" ><i class="bi bi-fullscreen"></i></a> -->
+                <a id="modallink" style="width: max-content;margin:auto;" class="m-3 btn btn-sm btn-info ">Countinue
+                    Reading</a>
+
+                <!-- <button class="btn" newsid=""><i class="bi bi-share-fill"></i></button> -->
+
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block js %}
+<script>
+    let modTitle = document.getElementById('exampleModalLabel');
+    let modelbox = document.getElementById('modelbox');
+    let modaltitle = document.getElementById('modaltitle');
+    let modalImg = document.getElementById('modalImg');
+    let modaldece = document.getElementById('modaldece');
+    let modalcont = document.getElementById('modalcont');
+    let auther = document.getElementById('auther');
+    let modallink = document.getElementById('modallink');
+
+
+    async function ShareNews(target) {
+        $.ajax({
+            type: "post",
+            url: "/modal",
+            data: { "name": 'monu', "item": target.getAttribute("newsid") },
+            success: async (data) => {
+                sharedata = JSON.parse(data)['data']
+                console.log(sharedata)
+
+                share = navigator.share({
+                    // Title that occurs over
+                    // web share dialog
+                    title: sharedata['title'],
+                    text: sharedata['description'],
+                    url: sharedata['url']
+                })
+
+
+            },
+            error: (error) => {
+                console.log(error)
+            }
+        })
+
+    }
+
+    function ScaleUPNews(target) {
+        console.log("The target is : ", target)
+
+
+        $.ajax({
+            type: "post",
+            url: "/modal/",
+            data: { "name": 'monu', "item": target.getAttribute("newsid") },
+            success: (data) => {
+                datas = JSON.parse(data)['data']
+                console.log(datas['data'])
+                modTitle.innerHTML = datas['channel'] + " Channel"
+                modaltitle.innerHTML = datas['title']
+                modalImg.src = datas['urlToImage']
+                modaldece.innerHTML = datas['description']
+                modalcont.innerHTML = datas['content'] + '...'
+                auther.innerHTML = datas['author']
+                modallink.href = "/news?q=" + datas['title']
+                modelbox.click()
+
+
+
+            },
+            error: (error) => {
+                console.log(error)
+            }
+        })
+
+    }
+
+    const input = document.getElementById("files");
+    const output = document.getElementById("output");
+
+    const popover = new bootstrap.Popover('.popover-dismiss', {
+        trigger: 'focus'
+    })
+</script>
+{% endblock js %}
